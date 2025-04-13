@@ -9,8 +9,8 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
-void main(array<String^>^ args) {
-    // Enable High-DPI Awareness to fix blurry UI
+int main(array<System::String^>^ args)
+{
     SetProcessDPIAware();
 
     Application::EnableVisualStyles();
@@ -18,4 +18,6 @@ void main(array<String^>^ args) {
 
     inventoryManagementSystem::MyForm form;
     Application::Run(% form);
+    return 0;
 }
+
