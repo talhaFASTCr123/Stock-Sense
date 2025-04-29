@@ -1,5 +1,6 @@
 #include "DashboardForm1.h"
 #include "MyForm.h" // Safe include
+#include "Reviews.h"
 
 using namespace inventoryManagementSystem;
 using namespace System::Windows::Forms;
@@ -7,6 +8,9 @@ using namespace System::Windows::Forms;
 DashboardForm1::DashboardForm1(void)
 {
     InitializeComponent();
+    reviewManager = new ReviewManager();
+
+
 }
 
 

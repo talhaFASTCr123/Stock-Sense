@@ -47,6 +47,10 @@ namespace inventoryManagementSystem {
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ textBox5;
+	private: System::Windows::Forms::TextBox^ textBox6;
+
+
 
 	protected:
 	private:
@@ -67,12 +71,14 @@ namespace inventoryManagementSystem {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -129,13 +135,13 @@ namespace inventoryManagementSystem {
 			// 
 			this->panel1->BackColor = System::Drawing::Color::White;
 			this->panel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel1.BackgroundImage")));
+			this->panel1->Controls->Add(this->textBox5);
 			this->panel1->Controls->Add(this->textBox4);
 			this->panel1->Controls->Add(this->textBox1);
 			this->panel1->Controls->Add(this->textBox3);
 			this->panel1->Controls->Add(this->textBox2);
 			this->panel1->Controls->Add(this->button4);
 			this->panel1->Controls->Add(this->button3);
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1310, 795);
@@ -144,38 +150,31 @@ namespace inventoryManagementSystem {
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseMove);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseUp);
 			// 
-			// button4
+			// textBox5
 			// 
-			this->button4->BackColor = System::Drawing::Color::Transparent;
-			this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button4->FlatAppearance->BorderSize = 0;
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
-			this->button4->ForeColor = System::Drawing::Color::Black;
-			this->button4->Location = System::Drawing::Point(790, 591);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(299, 38);
-			this->button4->TabIndex = 4;
-			this->button4->Text = L"Log In";
-			this->button4->UseVisualStyleBackColor = false;
-			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
+			this->textBox5->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox5->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox5->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
+			this->textBox5->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->textBox5->Location = System::Drawing::Point(804, 517);
+			this->textBox5->Name = L"textBox5";
+			this->textBox5->Size = System::Drawing::Size(269, 20);
+			this->textBox5->TabIndex = 8;
+			this->textBox5->TabStop = false;
+			this->textBox5->WordWrap = false;
 			// 
-			// button3
+			// textBox4
 			// 
-			this->button3->BackColor = System::Drawing::Color::Transparent;
-			this->button3->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button3->FlatAppearance->BorderSize = 0;
-			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
-			this->button3->ForeColor = System::Drawing::Color::White;
-			this->button3->Location = System::Drawing::Point(790, 516);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(299, 38);
-			this->button3->TabIndex = 3;
-			this->button3->TabStop = false;
-			this->button3->Text = L"Sign Up";
-			this->button3->UseVisualStyleBackColor = false;
-			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			this->textBox4->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox4->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox4->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
+			this->textBox4->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->textBox4->Location = System::Drawing::Point(789, 339);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(283, 20);
+			this->textBox4->TabIndex = 7;
+			this->textBox4->TabStop = false;
+			this->textBox4->WordWrap = false;
 			// 
 			// textBox1
 			// 
@@ -183,26 +182,12 @@ namespace inventoryManagementSystem {
 			this->textBox1->Cursor = System::Windows::Forms::Cursors::Cross;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
 			this->textBox1->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox1->Location = System::Drawing::Point(791, 246);
+			this->textBox1->Location = System::Drawing::Point(791, 248);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(281, 20);
 			this->textBox1->TabIndex = 4;
 			this->textBox1->TabStop = false;
 			this->textBox1->WordWrap = false;
-			// 
-			// textBox2
-			// 
-			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
-			this->textBox2->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox2->Location = System::Drawing::Point(804, 433);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(106, 15);
-			this->textBox2->TabIndex = 5;
-			this->textBox2->TabStop = false;
-			this->textBox2->UseSystemPasswordChar = true;
-			this->textBox2->WordWrap = false;
 			// 
 			// textBox3
 			// 
@@ -218,18 +203,66 @@ namespace inventoryManagementSystem {
 			this->textBox3->UseSystemPasswordChar = true;
 			this->textBox3->WordWrap = false;
 			// 
-			// textBox4
+			// textBox2
 			// 
-			this->textBox4->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox4->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox4->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
-			this->textBox4->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox4->Location = System::Drawing::Point(789, 339);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(283, 20);
-			this->textBox4->TabIndex = 7;
-			this->textBox4->TabStop = false;
-			this->textBox4->WordWrap = false;
+			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
+			this->textBox2->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->textBox2->Location = System::Drawing::Point(804, 433);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(106, 15);
+			this->textBox2->TabIndex = 5;
+			this->textBox2->TabStop = false;
+			this->textBox2->UseSystemPasswordChar = true;
+			this->textBox2->WordWrap = false;
+			// 
+			// button4
+			// 
+			this->button4->BackColor = System::Drawing::Color::Transparent;
+			this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button4->FlatAppearance->BorderSize = 0;
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
+			this->button4->ForeColor = System::Drawing::Color::Black;
+			this->button4->Location = System::Drawing::Point(789, 636);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(299, 38);
+			this->button4->TabIndex = 4;
+			this->button4->Text = L"Log In";
+			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
+			// 
+			// button3
+			// 
+			this->button3->BackColor = System::Drawing::Color::Transparent;
+			this->button3->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button3->FlatAppearance->BorderSize = 0;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button3->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
+			this->button3->ForeColor = System::Drawing::Color::White;
+			this->button3->Location = System::Drawing::Point(789, 577);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(299, 38);
+			this->button3->TabIndex = 3;
+			this->button3->TabStop = false;
+			this->button3->Text = L"Sign Up";
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			// 
+			// textBox6
+			// 
+			this->textBox6->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox6->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox6->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
+			this->textBox6->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->textBox6->Location = System::Drawing::Point(815, 391);
+			this->textBox6->Name = L"textBox6";
+			this->textBox6->Size = System::Drawing::Size(257, 15);
+			this->textBox6->TabIndex = 6;
+			this->textBox6->TabStop = false;
+			this->textBox6->UseSystemPasswordChar = true;
+			this->textBox6->WordWrap = false;
 			// 
 			// MyForm
 			// 
@@ -238,6 +271,7 @@ namespace inventoryManagementSystem {
 				static_cast<System::Int32>(static_cast<System::Byte>(1)));
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(1310, 795);
+			this->Controls->Add(this->textBox6);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->richTextBox1);
 			this->Controls->Add(this->button2);
@@ -254,6 +288,7 @@ namespace inventoryManagementSystem {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion

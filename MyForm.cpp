@@ -9,15 +9,14 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
-int main(array<System::String^>^ args)
+int main(cli::array<System::String^>^ args)
 {
-    SetProcessDPIAware();
+   SetProcessDPIAware();
 
-    Application::EnableVisualStyles();
-    Application::SetCompatibleTextRenderingDefault(false);
+   Application::EnableVisualStyles();
+   Application::SetCompatibleTextRenderingDefault(false);
 
-    inventoryManagementSystem::MyForm form;
-    Application::Run(% form);
-    return 0;
+   inventoryManagementSystem::MyForm form;
+   Application::Run(% form);
+   return 0;
 }
-
