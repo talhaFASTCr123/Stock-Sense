@@ -1,5 +1,9 @@
 ﻿#pragma once
-#include "DashboardForm1.h"  // ✅ Include full definition
+#pragma once
+#include <msclr/marshal_cppstd.h>
+using namespace msclr::interop;
+#include "DashboardForm1.h" 
+#include "Users.h"
 
 namespace inventoryManagementSystem {
 
@@ -19,19 +23,16 @@ namespace inventoryManagementSystem {
 		MyForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			userManager = new UserManager();
 		}
 
 	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
+		UserManager* userManager;
 		~MyForm()
 		{
 			if (components)
 			{
+				delete userManager;
 				delete components;
 			}
 		}
@@ -142,6 +143,7 @@ namespace inventoryManagementSystem {
 			this->panel1->Controls->Add(this->textBox2);
 			this->panel1->Controls->Add(this->button4);
 			this->panel1->Controls->Add(this->button3);
+			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1310, 795);
@@ -313,6 +315,7 @@ namespace inventoryManagementSystem {
 		button3->FlatAppearance->MouseOverBackColor = button3->BackColor;
 		button3->FlatAppearance->MouseDownBackColor = button3->BackColor;
 
+		button4->Enabled = false;
 		button4->FlatStyle = FlatStyle::Flat;
 		button4->FlatAppearance->BorderSize = 0;
 		button4->FlatAppearance->MouseOverBackColor = button4->BackColor;
@@ -325,17 +328,31 @@ namespace inventoryManagementSystem {
 	
 	// Button-1: Login button on login page
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		button1->FlatStyle = FlatStyle::Flat;
-		button1->FlatAppearance->BorderSize = 0;
-		button1->FlatAppearance->MouseOverBackColor = button1->BackColor;
-		button1->FlatAppearance->MouseDownBackColor = button1->BackColor;
+		// Get input
+		String^ email = richTextBox1->Text;
+		String^ password = textBox6->Text;
 
-		// Open dashboard form
+		if (email == "" || password == "") {
+			MessageBox::Show("Please enter both email and password.", "Login Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		// Convert to std::string
+		string uemail = msclr::interop::marshal_as<string>(email);
+		string upass = msclr::interop::marshal_as<string>(password);
+
+		// Try logging in
+		if (!userManager->login(uemail, upass)) {
+			MessageBox::Show("Invalid email or password.", "Login Failed", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		// Success
 		inventoryManagementSystem::DashboardForm1^ dashboard = gcnew inventoryManagementSystem::DashboardForm1();
 		dashboard->Show();
-		// Hide login form
 		this->Hide();
 	}
+
 
 
 	// Button-2: Create Account Button
@@ -344,34 +361,95 @@ namespace inventoryManagementSystem {
 		button2->FlatAppearance->BorderSize = 0;
 		button2->FlatAppearance->MouseOverBackColor = button2->BackColor;
 		button2->FlatAppearance->MouseDownBackColor = button2->BackColor;
+
+		// Clear all input fields
+		textBox1->Text = "";
+		textBox4->Text = "";
+		textBox2->Text = "";
+		textBox3->Text = "";
+		textBox5->Text = "";
+
+		button3->Enabled = true; // Re-enable sign-up button if it was disabled
+		button4->Enabled = false;
+
+		// Show the panel again
 		panel1->Show();
 	}
 
-	// Button-3: Login button in sign-up form
-	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Account successfully created!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
-		// Hide current signup panel
-		panel1->Hide();
+	// Button-3: Sign Up (Create Account)
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ name = textBox1->Text;
+		String^ email = textBox4->Text;
+		String^ pass = textBox2->Text;
+		String^ confirm = textBox3->Text;
+		String^ company = textBox5->Text;
+
+		// Basic Validation
+		if (name == "" || email == "" || pass == "" || confirm == "" || company == "") {
+			MessageBox::Show("Please fill in all fields.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+		if (pass != confirm) {
+			MessageBox::Show("Passwords do not match.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		// Convert to std::string
+		string uname = msclr::interop::marshal_as<string>(name);
+		string uemail = msclr::interop::marshal_as<string>(email);
+		string upass = msclr::interop::marshal_as<string>(pass);
+		string ucompany = msclr::interop::marshal_as<string>(company);
+
+		// Check email format
+		if (!validateEmailFormat(uemail)) {
+			MessageBox::Show("Invalid email format!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		// Check if email already exists
+		if (userManager->getUserByEmail(uemail) != nullptr) {
+			System::Windows::Forms::DialogResult result = MessageBox::Show("This email is already registered. Would you like to log in?", "Account Exists",
+				MessageBoxButtons::YesNo,
+				MessageBoxIcon::Information
+			);
+
+			if (result == System::Windows::Forms::DialogResult::Yes) {
+				// Go to login page
+				panel1->Hide();
+			}
+			else {
+				button3->Enabled = false; // Disable further signups for this session
+				button4->Enabled = true;
+			}
+			return;
+		}
+
+		// Create and register new user
+		Employee* newUser = new Employee(uname, upass, uemail, ucompany);
+		if (!userManager->registerUser(newUser)) {
+			MessageBox::Show("Failed to register. Try again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			delete newUser;
+			return;
+		}
+
+		MessageBox::Show("Account created successfully! You can now log in.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		panel1->Hide(); // Return to login
 	}
 
-	// Login button in Sign-Up Form
+
+
+	// Button-4: Log In (from sign-up form)
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Optional: style the button
 		button4->FlatStyle = FlatStyle::Flat;
 		button4->FlatAppearance->BorderSize = 0;
 		button4->FlatAppearance->MouseOverBackColor = button4->BackColor;
 		button4->FlatAppearance->MouseDownBackColor = button4->BackColor;
 
-		// Open dashboard form
 		inventoryManagementSystem::DashboardForm1^ dashboard = gcnew inventoryManagementSystem::DashboardForm1();
 		dashboard->Show();
-
-		// Hide current form
 		this->Hide();
 	}
-
-
 
 	/* DRAGGING FUNTIOANLITY BELOW THIS */
 	private: System::Void MyForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) 
@@ -396,13 +474,13 @@ namespace inventoryManagementSystem {
 	{
 		dragging = false;
 	}
-private: System::Void richTextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	// Optional logic
-}
+	private: System::Void richTextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		// Optional logic
+	}
 
-private: System::Void richTextBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	// Optional logic
-}
+	private: System::Void richTextBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		// Optional logic
+	}
 
 };
 }

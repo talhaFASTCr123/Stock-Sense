@@ -20,8 +20,6 @@ private:
 
 public:
     Product();
-    ~Product();
-
     // Getters
     int getId() const;
     char* getName() const;
@@ -43,6 +41,12 @@ public:
     void updateStock(int quantityChange);
     void addReview(const Review& review);
     double getAverageRating() const;
+
+public:
+    ~Product();
+
+    friend class Inventory;
+    friend class CompanyFile;
 };
 
 class Inventory {
@@ -54,23 +58,25 @@ private:
     char* allocateString(const char* source);
     void freeProduct(Product* product);
     void resizeInventory(bool increase);
+    void deleteProduct(int productId);
+    Inventory* filterByCategory(const char* category);
+    void freeFilteredInventory(Inventory* filtered);
+
+public:
+    Product** getProducts() const;
+    int getProductCount() const;
+    int getCapacity() const;
+
+    void addProduct(int id, const char* name, const char* category, double price, int quantity);
+    void setProducts(Product** newProducts);
+    void setProductCount(int count);
+    void setCapacity(int newCapacity);
 
 public:
     Inventory();
     ~Inventory();
 
-    Product** getProducts() const;
-    int getProductCount() const;
-    int getCapacity() const;
-
-    void setProducts(Product** newProducts);
-    void setProductCount(int count);
-    void setCapacity(int newCapacity);
-
-    void addProduct(int id, const char* name, const char* category, double price, int quantity);
-    void deleteProduct(int productId);
-    Inventory* filterByCategory(const char* category);
-    void freeFilteredInventory(Inventory* filtered);
+    friend class CompanyFile;
 };
 
 #endif

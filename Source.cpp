@@ -284,190 +284,97 @@ string encryptPassword(const string& password) {
     return password;
 }
 
-// ------------------ Users Class ------------------
+#include "Users.h"
+#include <iostream>
+using namespace std;
 
-Users::Users() : username(" "), password(" "), role(" "), email(" "), company(" ") {}
+#pragma once
+#include <string>
+using namespace std;
 
-Users::Users(string uname, string pass, string r, string e, string c)
-    : username(uname), password(pass), role(r), email(e), company(c) {
-}
+bool validateEmailFormat(const string& email);
+string encryptPassword(const string& password);
 
-string Users::getUsername() { return username; }
-string Users::getPassword() { return password; }
-string Users::getRole() { return role; }
-string Users::getemail() { return email; }
-string Users::getCompany() { return company; }
+class Users {
+protected:
+    string username;
+    string password;
+    string role;
+    string email;
 
-void Users::setPassword(string newPass) {
-    password = newPass;
-    cout << "Password changed successfully!\n";
-}
+    string getUsername();
+    string getPassword();
+    string getRole();
+    string getemail();
+    void setPassword(string newPass);
+    virtual void displayInfo();
 
-void Users::setCompany(string newCompany) {
-    company = newCompany;
-    cout << "Company name changed successfully!\n";
-}
+private:
+    Users();
+    Users(string uname, string pass, string r, string e);
 
-void Users::displayInfo() {
-    cout << "\nUser Details:\n";
-    cout << "Username: " << username << endl;
-    cout << "Role: " << role << endl;
-    cout << "Company: " << company << endl << endl;
-}
+public:
+    virtual ~Users();
 
-Users::~Users() {
-    cout << "User deleted successfully!\n";
-}
+    friend class UserManager;
+};
 
-// ------------------ Employee Class ------------------
+class Employee : virtual public Users {
+private:
+    Employee();
+    Employee(string uname, string pass, string umail);
+protected:
+    void displayInfo() override;
+public:
+    ~Employee();
 
-Employee::Employee() : Users(" ", " ", "Employee", " ", " ") {}
+    friend class UserManager;
+};
 
-Employee::Employee(string uname, string pass, string umail, string cmpny) {
-    username = uname;
-    password = pass;
-    email = umail;
-    company = cmpny;
-    role = "Employee";
-}
+class Admin : public Employee {
+private:
+    Admin();
+    Admin(string uname, string pass, string umail);
+protected:
+    void displayInfo() override;
+public:
+    ~Admin();
 
-// ------------------ Admin Class ------------------
+    friend class UserManager;
+};
 
-Admin::Admin() : Employee() {
-    role = "Admin";
-}
+class Owner : public Users {
+private:
+    Owner();
+    Owner(string uname, string pass, string email);
+    void promoteUser(Users*& users);
+    void demoteUser(Users*& users);
+    void deleteUser(Users**& users, int& count, string uname);
+protected:
+    void displayInfo() override;
+public:
+    ~Owner();
 
-Admin::Admin(string uname, string pass, string umail, string c)
-    : Employee(uname, pass, umail, c) {
-    role = "Admin";
-}
+    friend class UserManager;
+};
 
-// ------------------ Owner Class ------------------
+class UserManager {
+private:
+    Users** users;
+    int userCount;
+    int userCapacity;
+    Users* currentUser;
 
-Owner::Owner() : Users(" ", " ", "Owner", " ", " ") {}
+    UserManager();
+    void resizeUsers();
+public:
+    ~UserManager();
+    bool login(string username, string password);
+    void logout();
+    bool registerUser(Users* newUser);
+    Users* getCurrentUser();
+    Users* getUserByEmail(string uemail);
+    void displayAllUsers();
 
-Owner::Owner(string uname, string pass, string email, string c)
-    : Users(uname, pass, "Owner", uname + "@gmail.com", c) {
-}
-
-void Owner::promoteUser(Users*& user) {
-    if (user->getRole() == "Employee") {
-        user = new Admin(user->getUsername(), user->getPassword(), user->getemail(), user->getCompany());
-        cout << "User " << user->getUsername() << " promoted to Admin!\n\n";
-    }
-}
-
-void Owner::demoteUser(Users*& user) {
-    if (user->getRole() == "Admin") {
-        user = new Employee(user->getUsername(), user->getPassword(), user->getemail(), user->getCompany());
-        cout << "User " << user->getUsername() << " demoted to Employee!\n\n";
-    }
-}
-
-void Owner::deleteUser(Users**& users, int& count, string uname) {
-    for (int i = 0; i < count; i++) {
-        if (users[i]->getUsername() == uname) {
-            delete users[i];
-            for (int j = i; j < count - 1; j++) {
-                users[j] = users[j + 1];
-            }
-            count--;
-            cout << "User " << uname << " removed successfully!\n";
-            return;
-        }
-    }
-    cout << "User not found!\n";
-}
-
-// ------------------ UserManager Class ------------------
-
-UserManager::UserManager() {
-    userCount = 0;
-    userCapacity = 150;
-    currentUser = nullptr;
-    users = new Users * [userCapacity];
-}
-
-UserManager::~UserManager() {
-    for (int i = 0; i < userCount; i++) {
-        delete users[i];
-    }
-    delete[] users;
-    users = nullptr;
-}
-
-bool UserManager::login(string username, string password) {
-    for (int i = 0; i < userCount; i++) {
-        if (users[i]->getUsername() == username && users[i]->getPassword() == password) {
-            currentUser = users[i];
-            cout << "User logged in successfully!\n";
-            return true;
-        }
-    }
-    cout << "Login failed! Check credentials.\n";
-    return false;
-}
-
-void UserManager::logout() {
-    currentUser = nullptr;
-    cout << "Logged out successfully!\n";
-}
-
-bool UserManager::registerUser(Users* newUser) {
-    // Check duplicate email
-    for (int i = 0; i < userCount; i++) {
-        if (users[i]->getemail() == newUser->getemail()) {
-            cout << "Email already registered!\n";
-            return false;
-        }
-    }
-
-    // Validate email format
-    if (!validateEmailFormat(newUser->getemail())) {
-        cout << "Invalid email format!\n";
-        return false;
-    }
-
-    // Encrypt password
-    string encrypted = encryptPassword(newUser->getPassword());
-    newUser->setPassword(encrypted);
-
-    if (userCount >= userCapacity) resizeUsers();
-    users[userCount++] = newUser;
-
-    cout << "✅ User registered successfully.\n";
-    return true;
-}
-
-void UserManager::resizeUsers() {
-    int newCap = userCapacity * 2;
-    Users** NewUsers = new Users * [newCap];
-    for (int i = 0; i < userCount; i++) {
-        NewUsers[i] = users[i];
-    }
-    delete[] users;
-    users = NewUsers;
-    userCapacity = newCap;
-}
-
-Users* UserManager::getCurrentUser() {
-    return currentUser;
-}
-
-Users* UserManager::getUserByEmail(string uemail) {
-    for (int i = 0; i < userCount; i++) {
-        if (users[i]->getemail() == uemail) {
-            cout << "User with email found: " << uemail << endl;
-            return users[i];
-        }
-    }
-    return nullptr;
-}
-
-void UserManager::displayAllUsers() {
-    cout << "\nAll users:\n";
-    for (int i = 0; i < userCount; i++) {
-        users[i]->displayInfo();
-    }
-}
-
+    friend class CompanyFile;
+};

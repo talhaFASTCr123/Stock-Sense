@@ -8,9 +8,6 @@ using namespace System::Windows::Forms;
 DashboardForm1::DashboardForm1(void)
 {
     InitializeComponent();
-    reviewManager = new ReviewManager();
-
-
 }
 
 
