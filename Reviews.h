@@ -27,20 +27,3 @@ public:
 
     ~Review();
 };
-
-class ReviewManager {
-private:
-    Review* reviews;
-    int reviewCount;
-    int reviewCapacity;
-
-public:
-    ReviewManager();
-    ~ReviewManager();
-
-    void addReview(string u, int r, string c, time_t d);
-    double getAverageRating();
-    int getTotalReviewCount();
-    Review* getAllReviews() const;
-    void resizeReviewArray();
-};
