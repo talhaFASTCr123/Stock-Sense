@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Products.h"
 #include "Reviews.h"
 #include "Users.h"
@@ -7,14 +7,43 @@
 
 class CompanyFile 
 {
-	Inventory *inventory;
-	UserManager *directory;
+private:
+	Inventory *inventory; // products array
+	UserManager *directory; // users array
 	const string name;
+
+
 public:
 	CompanyFile(string n) :name(n)
 	{
 		inventory = new Inventory();
 		directory = new UserManager();
+	}
+
+	UserManager* getDirectory() { return directory; }
+	Inventory* getInventory() { return inventory; }
+
+	// Checking if the company already exists or not
+	bool companyExists(const string& companyName) {
+		ifstream file(companyName + "UserDirectory.csv");
+		return file.is_open(); // returns true if f can open
+	}
+
+
+	CompanyFile* loadCompany(const string& companyName) {
+		CompanyFile* company = new CompanyFile(companyName);
+		company->loadUsersFromFile();
+		company->loadProductsFromFile();
+		return company;
+	}
+
+
+	void setPasswordForEmail(string email, string newPassword) {
+		Users* user = directory->getUserByEmail(email);
+		if (user) {
+			user->setPassword(encryptPassword(newPassword));
+			saveUsersToFile(); // persist change
+		}
 	}
 
 	// ALL INVENTORY RELATED METHODS
@@ -55,7 +84,7 @@ public:
 	//ALL USER RELATED METHODS
 	bool login(string username, string password)
 	{
-		directory->login(username, password);
+		return directory->login(username, password);
 	}
 	void logout()
 	{
@@ -63,15 +92,35 @@ public:
 	}
 	bool registerUser(Users* newUsers)
 	{
-		directory->registerUser(newUsers);
+		return directory->registerUser(newUsers);
+	}
+	bool registerNewOwner(string fullName, string email) {
+		string username = email.substr(0, email.find('@'));
+
+		// Create a Users object manually
+		Users* owner = new Users();
+		owner->username = username;
+		owner->password = "";  // initially no password
+		owner->email = email;
+		owner->role = "Owner";
+
+		bool success = directory->registerUser(owner); // insert into in-memory directory
+		if (success) {
+			saveUsersToFile();  // persist to file
+			return true;
+		}
+		else {
+			delete owner;
+			return false;
+		}
 	}
 	Users* getCurrentUser()
 	{
-		directory->getCurrentUser();
+		return directory->getCurrentUser();
 	}
-	Users* getUserByName(string uemail)
+	Users* getUserByMail(string uemail)
 	{
-		directory->getUserByEmail(uemail);
+		return directory->getUserByEmail(uemail);
 	}
 	void displayAllUsers()
 	{
@@ -79,13 +128,13 @@ public:
 	}
 
 
-	//FILE HANDLING
+	// ============================ FILE HANDLING ============================
 	const string userFile = name + "UserDirectory.csv";
 	const string productFile = name + "Inventory.csv";
 	
 	void saveUsersToFile()
 	{
-		Users**userList = directory->users;
+		Users** userList = directory->users;
 		ofstream file(userFile);
 
 		if (!file.is_open()) {
@@ -93,13 +142,13 @@ public:
 			return;
 		}
 
-		// Write CSV header
-		file << directory->userCount << endl;
+		// Write user count without trailing commas
+		file << directory->userCount << "\n";
 		file << "Username,Password,Role,Email\n";
 
 		// Write each user's data
 		for (int i = 0; i < directory->userCount; ++i) {
-			file <<userList[i]->getUsername() << ","
+			file << userList[i]->getUsername() << ","
 				<< userList[i]->getPassword() << ","
 				<< userList[i]->getRole() << ","
 				<< userList[i]->getemail() << "\n";
@@ -108,6 +157,8 @@ public:
 		file.close();
 		cout << "Data written to " << userFile << " successfully." << endl;
 	}
+
+
 	void loadUsersFromFile()
 	{
 		ifstream file(userFile);
@@ -118,34 +169,87 @@ public:
 			return;
 		}
 
-		//get count
-		getline(file, line);
-		directory->userCount = stoi(line);
-		
+		// Step 1: Get user count line safely
+		if (!getline(file, line)) {
+			cerr << "User count line missing in file.\n";
+			return;
+		}
+
+		// Step 2: Extract only the first CSV token for user count
+		stringstream countStream(line);
+		string countToken;
+		getline(countStream, countToken, ',');
+
+		// Step 3: Validate that it's all digits
+		if (countToken.empty()) {
+			cerr << "Invalid user count in file: " << userFile << endl;
+			return;
+		}
+		for (char c : countToken) {
+			if (!isdigit(c)) {
+				cerr << "Invalid user count in file: " << userFile << endl;
+				return;
+			}
+		}
+
+		int count = stoi(countToken);
+
+		// Bounds check
+		if (count <= 0 || count > 150) {
+			cerr << "User count out of safe range: " << count << endl;
+			return;
+		}
+
+		directory->userCount = count;
+
+		// Step 4: Clean up old memory safely
+		if (directory->users != nullptr) {
+			for (int i = 0; i < 150; ++i) {
+				if (directory->users[i] != nullptr) {
+					delete directory->users[i];
+					directory->users[i] = nullptr;
+				}
+			}
+			delete[] directory->users;
+			directory->users = nullptr;
+		}
+
+		// Step 5: Allocate new user array
 		directory->users = new Users * [directory->userCount];
+		for (int i = 0; i < directory->userCount; ++i) {
+			directory->users[i] = new Users();
+		}
+
 		Users** userList = directory->users;
-		//skip header
-		getline(file, line);
-		int count = 0;
-		while (getline(file, line) && count < directory->userCount) {
+
+		// Step 6: Skip the CSV header
+		if (!getline(file, line)) {
+			cerr << "CSV header missing.\n";
+			return;
+		}
+
+		// Step 7: Parse user entries
+		int loaded = 0;
+		while (getline(file, line) && loaded < directory->userCount) {
 			stringstream ss(line);
 			string username, password, role, email;
 
-			// Parse CSV fields
 			getline(ss, username, ',');
 			getline(ss, password, ',');
 			getline(ss, role, ',');
 			getline(ss, email, ',');
 
-			userList[count]->username = username;
-			userList[count]->password = password;
-			userList[count]->role = role;
-			userList[count]->email = email;
-			count++;
+			userList[loaded]->username = username;
+			userList[loaded]->password = password;
+			userList[loaded]->role = role;
+			userList[loaded]->email = email;
+			loaded++;
 		}
 
+		cout << "Loaded " << loaded << " user(s) from file: " << userFile << endl;
 		file.close();
 	}
+
 
 	void saveProductsToFile()
 	{
@@ -185,14 +289,14 @@ public:
 				file << ",";
 			}
 			file << "\n";
-			delete[]reviews;
+			delete [] reviews;
 		}
 
 		file.close();
 		cout << "Data written to " << productFile << " successfully." << endl;
 	}
 
-		void loadProductsFromFile()
+	void loadProductsFromFile()
 	{
 		ifstream file(productFile);
 		string line;

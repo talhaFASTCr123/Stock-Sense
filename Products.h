@@ -41,8 +41,6 @@ public:
     void updateStock(int quantityChange);
     void addReview(const Review& review);
     double getAverageRating() const;
-
-public:
     ~Product();
 
     friend class Inventory;
@@ -72,8 +70,6 @@ public:
     void setProducts(Product** newProducts);
     void setProductCount(int count);
     void setCapacity(int newCapacity);
-
-public:
     Inventory();
     ~Inventory();
 

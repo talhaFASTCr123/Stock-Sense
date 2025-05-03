@@ -2,7 +2,7 @@
 #include <msclr/marshal_cppstd.h>
 using namespace msclr::interop;
 #include "DashboardForm1.h" 
-#include "Users.h"
+#include "CompanyFile.h"
 
 namespace inventoryManagementSystem {
 
@@ -22,31 +22,40 @@ namespace inventoryManagementSystem {
 		MyForm(void)
 		{
 			InitializeComponent();
-			userManager = new UserManager();
 		}
 
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Panel^ panel2;
+	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::Button^ button4;
+
+	public:
+
 	protected:
-		UserManager* userManager;
+		CompanyFile* currentCompany;
+		Users* currentRegisteringUser;  // the user currently being registered (email match)
+		bool isCreatingNewCompany;      // true if user is creating a new company
 		~MyForm()
 		{
 			if (components)
 			{
-				delete userManager;
+				delete currentCompany;
 				delete components;
 			}
 		}
 	private: System::Windows::Forms::Button^ button1;
 	protected:
-	private: System::Windows::Forms::Button^ button2;
+
 	private: System::Windows::Forms::RichTextBox^ richTextBox1;
 
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button4;
+
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::TextBox^ textBox2;
+
+
 	private: System::Windows::Forms::TextBox^ textBox5;
 	private: System::Windows::Forms::TextBox^ textBox6;
 
@@ -68,18 +77,20 @@ namespace inventoryManagementSystem {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
+			this->panel2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -98,23 +109,6 @@ namespace inventoryManagementSystem {
 			this->button1->Text = L"Log In";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
-			// 
-			// button2
-			// 
-			this->button2->BackColor = System::Drawing::Color::Transparent;
-			this->button2->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button2->FlatAppearance->BorderSize = 0;
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
-			this->button2->ForeColor = System::Drawing::Color::Black;
-			this->button2->Location = System::Drawing::Point(790, 547);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(299, 38);
-			this->button2->TabIndex = 1;
-			this->button2->TabStop = false;
-			this->button2->Text = L"Create Account";
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
 			// richTextBox1
 			// 
@@ -138,9 +132,6 @@ namespace inventoryManagementSystem {
 			this->panel1->Controls->Add(this->textBox5);
 			this->panel1->Controls->Add(this->textBox4);
 			this->panel1->Controls->Add(this->textBox1);
-			this->panel1->Controls->Add(this->textBox3);
-			this->panel1->Controls->Add(this->textBox2);
-			this->panel1->Controls->Add(this->button4);
 			this->panel1->Controls->Add(this->button3);
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel1->Location = System::Drawing::Point(0, 0);
@@ -157,7 +148,7 @@ namespace inventoryManagementSystem {
 			this->textBox5->Cursor = System::Windows::Forms::Cursors::Cross;
 			this->textBox5->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
 			this->textBox5->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox5->Location = System::Drawing::Point(804, 517);
+			this->textBox5->Location = System::Drawing::Point(804, 479);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(269, 20);
 			this->textBox5->TabIndex = 8;
@@ -170,7 +161,7 @@ namespace inventoryManagementSystem {
 			this->textBox4->Cursor = System::Windows::Forms::Cursors::Cross;
 			this->textBox4->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold));
 			this->textBox4->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox4->Location = System::Drawing::Point(789, 339);
+			this->textBox4->Location = System::Drawing::Point(790, 339);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(283, 20);
 			this->textBox4->TabIndex = 7;
@@ -190,50 +181,6 @@ namespace inventoryManagementSystem {
 			this->textBox1->TabStop = false;
 			this->textBox1->WordWrap = false;
 			// 
-			// textBox3
-			// 
-			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox3->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
-			this->textBox3->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox3->Location = System::Drawing::Point(952, 435);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(102, 15);
-			this->textBox3->TabIndex = 6;
-			this->textBox3->TabStop = false;
-			this->textBox3->UseSystemPasswordChar = true;
-			this->textBox3->WordWrap = false;
-			// 
-			// textBox2
-			// 
-			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
-			this->textBox2->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox2->Location = System::Drawing::Point(804, 433);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(106, 15);
-			this->textBox2->TabIndex = 5;
-			this->textBox2->TabStop = false;
-			this->textBox2->UseSystemPasswordChar = true;
-			this->textBox2->WordWrap = false;
-			// 
-			// button4
-			// 
-			this->button4->BackColor = System::Drawing::Color::Transparent;
-			this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button4->FlatAppearance->BorderSize = 0;
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
-			this->button4->ForeColor = System::Drawing::Color::Black;
-			this->button4->Location = System::Drawing::Point(789, 636);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(299, 38);
-			this->button4->TabIndex = 4;
-			this->button4->Text = L"Log In";
-			this->button4->UseVisualStyleBackColor = false;
-			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
-			// 
 			// button3
 			// 
 			this->button3->BackColor = System::Drawing::Color::Transparent;
@@ -247,7 +194,7 @@ namespace inventoryManagementSystem {
 			this->button3->Size = System::Drawing::Size(299, 38);
 			this->button3->TabIndex = 3;
 			this->button3->TabStop = false;
-			this->button3->Text = L"Sign Up";
+			this->button3->Text = L"REGISTER";
 			this->button3->UseVisualStyleBackColor = false;
 			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
@@ -257,13 +204,89 @@ namespace inventoryManagementSystem {
 			this->textBox6->Cursor = System::Windows::Forms::Cursors::Cross;
 			this->textBox6->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
 			this->textBox6->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->textBox6->Location = System::Drawing::Point(815, 391);
+			this->textBox6->Location = System::Drawing::Point(815, 399);
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(257, 15);
 			this->textBox6->TabIndex = 6;
 			this->textBox6->TabStop = false;
 			this->textBox6->UseSystemPasswordChar = true;
 			this->textBox6->WordWrap = false;
+			// 
+			// button2
+			// 
+			this->button2->BackColor = System::Drawing::Color::Transparent;
+			this->button2->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button2->FlatAppearance->BorderSize = 0;
+			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 8, System::Drawing::FontStyle::Bold));
+			this->button2->ForeColor = System::Drawing::Color::Black;
+			this->button2->Location = System::Drawing::Point(790, 547);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(299, 38);
+			this->button2->TabIndex = 1;
+			this->button2->TabStop = false;
+			this->button2->Text = L"Register Company";
+			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
+			// panel2
+			// 
+			this->panel2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel2.BackgroundImage")));
+			this->panel2->Controls->Add(this->button4);
+			this->panel2->Controls->Add(this->textBox3);
+			this->panel2->Controls->Add(this->textBox2);
+			this->panel2->Location = System::Drawing::Point(475, 217);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(538, 398);
+			this->panel2->TabIndex = 9;
+			// 
+			// button4
+			// 
+			this->button4->BackColor = System::Drawing::Color::Transparent;
+			this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button4->FlatAppearance->BorderSize = 3;
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button4->ForeColor = System::Drawing::Color::White;
+			this->button4->Location = System::Drawing::Point(119, 335);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(299, 44);
+			this->button4->TabIndex = 10;
+			this->button4->TabStop = false;
+			this->button4->Text = L"CONFIRM";
+			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click_1);
+			// 
+			// textBox3
+			// 
+			this->textBox3->BackColor = System::Drawing::Color::Black;
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox3->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox3->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
+			this->textBox3->ForeColor = System::Drawing::Color::White;
+			this->textBox3->Location = System::Drawing::Point(139, 287);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(257, 15);
+			this->textBox3->TabIndex = 10;
+			this->textBox3->TabStop = false;
+			this->textBox3->UseSystemPasswordChar = true;
+			this->textBox3->WordWrap = false;
+			// 
+			// textBox2
+			// 
+			this->textBox2->BackColor = System::Drawing::Color::Black;
+			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 5.8F, System::Drawing::FontStyle::Bold));
+			this->textBox2->ForeColor = System::Drawing::Color::White;
+			this->textBox2->Location = System::Drawing::Point(138, 217);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(257, 15);
+			this->textBox2->TabIndex = 9;
+			this->textBox2->TabStop = false;
+			this->textBox2->UseSystemPasswordChar = true;
+			this->textBox2->WordWrap = false;
 			// 
 			// MyForm
 			// 
@@ -272,6 +295,7 @@ namespace inventoryManagementSystem {
 				static_cast<System::Int32>(static_cast<System::Byte>(1)));
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(1310, 795);
+			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->textBox6);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->richTextBox1);
@@ -288,6 +312,8 @@ namespace inventoryManagementSystem {
 			this->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseUp);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
+			this->panel2->ResumeLayout(false);
+			this->panel2->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -314,136 +340,195 @@ namespace inventoryManagementSystem {
 		button3->FlatAppearance->MouseOverBackColor = button3->BackColor;
 		button3->FlatAppearance->MouseDownBackColor = button3->BackColor;
 
-		button4->Enabled = false;
 		button4->FlatStyle = FlatStyle::Flat;
 		button4->FlatAppearance->BorderSize = 0;
 		button4->FlatAppearance->MouseOverBackColor = button4->BackColor;
 		button4->FlatAppearance->MouseDownBackColor = button4->BackColor;
 
-		panel1->Hide();
+		panel1->BringToFront();
+		panel2->Hide();
 		dragging = false;
 	}
 
-	
+	// Run this if user said that he has a company and wants to register as employee
+	void prefillUsernameField(string sEmail) {
+		currentRegisteringUser = currentCompany->getUserByMail(sEmail);
+
+		if (isCreatingNewCompany) {
+			// Let user choose their username
+			richTextBox1->ReadOnly = false;
+			richTextBox1->Text = "";
+		}
+		else {
+			if (currentRegisteringUser != nullptr) {
+				richTextBox1->Text = gcnew String(currentRegisteringUser->getUsername().c_str());
+				richTextBox1->ReadOnly = true;
+			}
+		}
+	}
+
+
 	// Button-1: Login button on login page
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Get input
-		String^ email = richTextBox1->Text;
+		// Store the inputs
+		String^ username = richTextBox1->Text;
 		String^ password = textBox6->Text;
 
-		if (email == "" || password == "") {
-			MessageBox::Show("Please enter both email and password.", "Login Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		// Validation
+		if (username == "" || password == "") {
+			MessageBox::Show("Enter both username and password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
-		// Convert to std::string
-		string uemail = msclr::interop::marshal_as<string>(email);
-		string upass = msclr::interop::marshal_as<string>(password);
+		string sPass = marshal_as<string>(password);
 
-		// Try logging in
-		if (!userManager->login(uemail, upass)) {
-			MessageBox::Show("Invalid email or password.", "Login Failed", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		if (currentRegisteringUser == nullptr) {
+			MessageBox::Show("Unexpected error. No user found.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 
-		// Success
-		inventoryManagementSystem::DashboardForm1^ dashboard = gcnew inventoryManagementSystem::DashboardForm1();
-		dashboard->Show();
-		this->Hide();
+		// If password is empty, ask user to set a new password
+		if (currentRegisteringUser->getPassword() == "") {
+			panel2->Show();
+		}
+		else {
+			// Check entered password
+			if (currentRegisteringUser->getPassword() == sPass) {
+				// Successful login
+				MessageBox::Show("Login successful!", "Success");
+				DashboardForm1^ dashboard = gcnew DashboardForm1();
+				dashboard->Show();
+				this->Hide();
+			}
+			else {
+				MessageBox::Show("Incorrect password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
 	}
 
 
 
-	// Button-2: Create Account Button
+	// Button-2: Back To Register Company Button
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		button2->FlatStyle = FlatStyle::Flat;
-		button2->FlatAppearance->BorderSize = 0;
-		button2->FlatAppearance->MouseOverBackColor = button2->BackColor;
-		button2->FlatAppearance->MouseDownBackColor = button2->BackColor;
+		// Reset user registration fields
+		richTextBox1->Text = "";
+		richTextBox1->ReadOnly = false;
+		textBox6->Text = "";      // Login password box
+		textBox2->Text = "";      // New password
+		textBox3->Text = "";      // Confirm password
 
-		// Clear all input fields
-		textBox1->Text = "";
-		textBox4->Text = "";
-		textBox2->Text = "";
-		textBox3->Text = "";
-		textBox5->Text = "";
+		// Reset company registration fields
+		textBox1->Text = "";      // Full Name
+		textBox4->Text = "";      // Email
+		textBox5->Text = "";      // Company Name
 
-		button3->Enabled = true; // Re-enable sign-up button if it was disabled
-		button4->Enabled = false;
-
-		// Show the panel again
+		// Hide panels except initial
+		panel2->Hide();
 		panel1->Show();
+
+		// Reset state variables
+		currentRegisteringUser = nullptr;
+		isCreatingNewCompany = false;
 	}
 
 
-	// Button-3: Sign Up (Create Account)
+	// Button-3: Initial Register company button
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ name = textBox1->Text;
+		String^ fullName = textBox1->Text;
 		String^ email = textBox4->Text;
-		String^ pass = textBox2->Text;
-		String^ confirm = textBox3->Text;
-		String^ company = textBox5->Text;
+		String^ companyName = textBox5->Text;
 
-		// Basic Validation
-		if (name == "" || email == "" || pass == "" || confirm == "" || company == "") {
-			MessageBox::Show("Please fill in all fields.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			return;
-		}
-		if (pass != confirm) {
-			MessageBox::Show("Passwords do not match.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		// Validation
+		if (fullName == "" || email == "" || companyName == "") {
+			MessageBox::Show("Please fill in all fields.", "Missing Data", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
 		// Convert to std::string
-		string uname = msclr::interop::marshal_as<string>(name);
-		string uemail = msclr::interop::marshal_as<string>(email);
-		string upass = msclr::interop::marshal_as<string>(pass);
-		string ucompany = msclr::interop::marshal_as<string>(company);
+		string sFullName = marshal_as<string>(fullName);
+		string sEmail = marshal_as<string>(email);
+		string sCompany = marshal_as<string>(companyName);
 
-		// Check email format
-		if (!validateEmailFormat(uemail)) {
+		if (!validateEmailFormat(sEmail)) {
 			MessageBox::Show("Invalid email format!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
-		// Check if email already exists
-		if (userManager->getUserByEmail(uemail) != nullptr) {
-			System::Windows::Forms::DialogResult result = MessageBox::Show("This email is already registered. Would you like to log in?", "Account Exists",
-				MessageBoxButtons::YesNo,
-				MessageBoxIcon::Information
-			);
+		// Check if company file already exists
+		string companyFilePath = sCompany + "UserDirectory.csv";
+
+		ifstream checkFile(companyFilePath);
+		if (!checkFile.good()) {
+			// Company doesn't exist. Ask to create it
+			System::Windows::Forms::DialogResult result = MessageBox::Show("Company does not exist. Do you want to create a new company?", "Company Not Found", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 
 			if (result == System::Windows::Forms::DialogResult::Yes) {
-				// Go to login page
-				panel1->Hide();
+				// Create new company and set current user as owner
+				currentCompany = new CompanyFile(sCompany);
+				bool success = currentCompany->registerNewOwner(sFullName, sEmail);
+				if (!success) {
+					MessageBox::Show("Owner registration failed.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				currentCompany->saveUsersToFile();
+
+				MessageBox::Show("Company registered! You can now create your user account.", "Success");
+				isCreatingNewCompany = true;
+				prefillUsernameField(sEmail);
+				panel1->Hide(); // Go to user registration
 			}
 			else {
-				button3->Enabled = false; // Disable further signups for this session
-				button4->Enabled = true;
+				MessageBox::Show("Please enter a valid existing company to proceed.", "Company Required", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			}
+		}
+		else {
+			// Company exists, check if email exists in that company
+			currentCompany = new CompanyFile(sCompany);
+			currentCompany->loadUsersFromFile();
+
+			Users* existing = currentCompany->getUserByMail(sEmail);
+			if (existing == nullptr) {
+				MessageBox::Show("This email has not been added to the company. Please ask the owner to add you.", "Access Denied", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				delete currentCompany;
+				currentCompany = nullptr;
+				return;
+			}
+
+			// Show user registration form
+			isCreatingNewCompany = false;
+			prefillUsernameField(sEmail);
+			panel1->Hide(); // Go to user registration
+		}
+	}
+
+		   // Confirm button on entering new password
+	private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^ e)
+	{
+		String^ p1 = textBox2->Text;
+		String^ p2 = textBox3->Text;
+
+		if (p1 == "" || p2 == "") {
+			MessageBox::Show("Please fill both password fields.", "Missing Data", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
-		// Create and register new user
-		Employee* newUser = new Employee(uname, upass, uemail);
-		if (!userManager->registerUser(newUser)) {
-			MessageBox::Show("Failed to register. Try again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			delete newUser;
+		if (p1 != p2) {
+			MessageBox::Show("Passwords do not match!", "Mismatch", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 
-		MessageBox::Show("Account created successfully! You can now log in.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		panel1->Hide(); // Return to login
+		string sPass = marshal_as<string>(p1);
+		currentRegisteringUser->setPassword(sPass);
+		currentCompany->saveUsersToFile();
+
+		panel2->Hide();
+		MessageBox::Show("Password set successfully. You can now log in!", "Done");
 	}
 
 
-
-	// Button-4: Log In (from sign-up form)
+	// Button-4: Log In (from sign-up form: THIS HAS BEEN REMOVED )
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
-		button4->FlatStyle = FlatStyle::Flat;
-		button4->FlatAppearance->BorderSize = 0;
-		button4->FlatAppearance->MouseOverBackColor = button4->BackColor;
-		button4->FlatAppearance->MouseDownBackColor = button4->BackColor;
 
 		inventoryManagementSystem::DashboardForm1^ dashboard = gcnew inventoryManagementSystem::DashboardForm1();
 		dashboard->Show();
@@ -473,6 +558,9 @@ namespace inventoryManagementSystem {
 	{
 		dragging = false;
 	}
+
+
+
 	private: System::Void richTextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		// Optional logic
 	}
@@ -480,6 +568,5 @@ namespace inventoryManagementSystem {
 	private: System::Void richTextBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		// Optional logic
 	}
-
 };
 }

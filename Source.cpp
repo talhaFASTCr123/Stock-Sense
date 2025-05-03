@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Reviews.h"
 #include "Products.h"
 #include "Users.h"
@@ -257,6 +257,22 @@ void Inventory::freeFilteredInventory(Inventory* filtered) {
     }
 }
 
+
+Product* Inventory::findProductById(int id)
+{
+    for (int i = 0; i < productCount; i++)
+    {
+        if (products[i]->getId() == id)
+        {
+            return products[i];
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+}
+
 // ------------------ Utility Functions ------------------
 
 bool validateEmailFormat(const string& email) {
@@ -400,6 +416,10 @@ UserManager::UserManager() {
     userCapacity = 150;
     currentUser = nullptr;
     users = new Users * [userCapacity];
+    for (int i = 0; i < 150; i++)
+    {
+        users[i] = nullptr;
+    }
 }
 
 UserManager::~UserManager() {
@@ -470,13 +490,19 @@ Users* UserManager::getCurrentUser() {
 
 Users* UserManager::getUserByEmail(string uemail) {
     for (int i = 0; i < userCount; i++) {
+        if (users[i] == nullptr) {
+            cout << "❌ Null user at index " << i << endl;
+            continue;
+        }
         if (users[i]->getemail() == uemail) {
-            cout << "User with email found: " << uemail << endl;
+            cout << "User found: " << uemail << endl;
             return users[i];
         }
     }
+    cout << "No user found with email: " << uemail << endl;
     return nullptr;
 }
+
 
 void UserManager::displayAllUsers() {
     cout << "\nAll users:\n";
