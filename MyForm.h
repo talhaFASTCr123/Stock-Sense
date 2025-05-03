@@ -426,7 +426,7 @@ namespace inventoryManagementSystem {
 		}
 
 		// Create and register new user
-		Employee* newUser = new Employee(uname, upass, uemail, ucompany);
+		Employee* newUser = new Employee(uname, upass, uemail);
 		if (!userManager->registerUser(newUser)) {
 			MessageBox::Show("Failed to register. Try again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			delete newUser;
