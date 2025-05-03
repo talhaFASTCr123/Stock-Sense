@@ -149,7 +149,47 @@ public:
 
 	void saveProductsToFile()
 	{
+		Product** products = inventory->getProducts();
+		
+		ofstream file(productFile);
 
+		if (!file.is_open()) {
+			cerr << "Failed to open file: " << productFile << endl;
+			return;
+		}
+
+		// Write CSV header
+		file << inventory->getProductCount() << endl;
+		file << "ID,Name,Category,Price,Quantity,Total Sales,Reviews\n";
+
+		// Write each user's data
+		for (int i = 0; i < inventory->getProductCount(); ++i) {
+			file << products[i]->getId() << ","
+				<< products[i]->getName() << ","
+				<< products[i]->getCategory() << ","
+				<< products[i]->getPrice() << ","
+				<< products[i]->getQuantity() << ","
+				<< products[i]->getTotalSales() << ",";
+			Review* reviews = products[i]->getAllReviews();
+			
+
+			for (int j = 0; j < products[i]->getReviewCount(); j++)
+			{
+				file << reviews[j].getComment() << "|" 
+					<< reviews[j].getRating() << "|" 
+					<< reviews[j].getUsername() << "|"
+					<< reviews[j].getDate();
+			}
+			if (i< inventory->getProductCount()-1)
+			{
+				file << ",";
+			}
+			file << "\n";
+			delete[]reviews;
+		}
+
+		file.close();
+		cout << "Data written to " << productFile << " successfully." << endl;
 	}
 
 	void loadProductsFromFile()
@@ -157,4 +197,3 @@ public:
 
 	}
 };
-
