@@ -61,6 +61,7 @@ private:
     void deleteProduct(int productId);
     Inventory* filterByCategory(const char* category);
     void freeFilteredInventory(Inventory* filtered);
+    Product* findProductById(int id);
 
 public:
     Product** getProducts() const;
