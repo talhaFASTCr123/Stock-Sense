@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <msclr/marshal_cppstd.h>
 using namespace msclr::interop;
 #include "DashboardForm1.h" 
