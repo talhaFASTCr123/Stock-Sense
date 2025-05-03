@@ -30,6 +30,7 @@ public:
     friend class Admin;
     friend class Employee;
     friend class Owner;
+    friend class CompanyFile;
 };
 
 class Employee : virtual public Users {
