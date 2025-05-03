@@ -256,7 +256,22 @@ void Inventory::freeFilteredInventory(Inventory* filtered) {
         delete filtered;
     }
 }
+Product* Inventory::findProductById(int id)
+{
+    for (int i = 0; i < productCount; i++)
+    {
+        if (products[i]->getId()==id)
+        {
+            return products[i];
+        }
+        else 
+        {
+            
+            return nullptr;
+        }
 
+    }
+}
 // ------------------ Utility Functions ------------------
 
 bool validateEmailFormat(const string& email) {
