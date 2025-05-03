@@ -192,8 +192,71 @@ public:
 		cout << "Data written to " << productFile << " successfully." << endl;
 	}
 
-	void loadProductsFromFile()
+		void loadProductsFromFile()
 	{
+		ifstream file(productFile);
+		string line;
 
+		if (!file.is_open()) {
+			cerr << "Failed to open file: " << productFile << endl;
+			return;
+		}
+
+		// Read and ignore product count
+		getline(file, line);
+
+		// Skip CSV header
+		getline(file, line);
+
+		while (getline(file, line)) {
+			stringstream ss(line);
+			string idStr, nameStr, categoryStr, priceStr, quantityStr, salesStr;
+
+			// Read core product fields
+			getline(ss, idStr, ',');
+			getline(ss, nameStr, ',');
+			getline(ss, categoryStr, ',');
+			getline(ss, priceStr, ',');
+			getline(ss, quantityStr, ',');
+			getline(ss, salesStr, ',');
+
+			int id = atoi(idStr.c_str());
+			double price = atof(priceStr.c_str());
+			int quantity = atoi(quantityStr.c_str());
+			int totalSales = atoi(salesStr.c_str());
+
+			// Add product to inventory
+			inventory->addProduct(id, nameStr.c_str(), categoryStr.c_str(), price, quantity);
+
+			// Access the product just added
+			Product** products = inventory->getProducts();
+			Product* product = products[inventory->getProductCount() - 1];
+			product->setTotalSales(totalSales);
+
+			// Parse and add reviews
+			string reviewField;
+			while (getline(ss, reviewField, ',')) {
+				stringstream reviewStream(reviewField);
+				string comment, ratingStr, username, dateStr;
+
+				getline(reviewStream, comment, '|');
+				getline(reviewStream, ratingStr, '|');
+				getline(reviewStream, username, '|');
+				getline(reviewStream, dateStr, '|');
+
+				time_t date = atol(dateStr.c_str());
+
+				Review review;
+				review.setComment(comment);
+				review.setRating(atoi(ratingStr.c_str()));
+				review.setUsername(username);
+				review.setDate(date);
+
+				product->addReview(review);
+			}
+		}
+
+		file.close();
+		cout << "Products loaded from " << productFile << " successfully." << endl;
 	}
 };
