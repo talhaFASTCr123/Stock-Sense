@@ -66,6 +66,7 @@ public:
     int getProductCount() const;
     int getCapacity() const;
 
+    void removeProductAt(int index);
     void addProduct(int id, const char* name, const char* category, double price, int quantity);
     void setProducts(Product** newProducts);
     void setProductCount(int count);

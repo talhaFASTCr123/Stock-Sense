@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Products.h"
 #include "Reviews.h"
+#include <algorithm>
 #include "Users.h"
 #include <fstream>
 #include <sstream>
@@ -22,6 +23,7 @@ public:
 
 	UserManager* getDirectory() { return directory; }
 	Inventory* getInventory() { return inventory; }
+	string getCompanyName() { return name; };
 
 	// Checking if the company already exists or not
 	bool companyExists(const string& companyName) {
@@ -104,9 +106,10 @@ public:
 		owner->email = email;
 		owner->role = "Owner";
 
-		bool success = directory->registerUser(owner); // insert into in-memory directory
+		bool success = directory->registerUser(owner);
 		if (success) {
 			saveUsersToFile();  // persist to file
+			saveProductsToFile();
 			return true;
 		}
 		else {
@@ -159,102 +162,83 @@ public:
 	}
 
 
-	void loadUsersFromFile()
-	{
+	void loadUsersFromFile() {
 		ifstream file(userFile);
-		string line;
-
 		if (!file.is_open()) {
-			cerr << "Failed to open file: " << userFile << endl;
-			return;
+			cout << ("Failed to open file: " + userFile);
 		}
-
-		// Step 1: Get user count line safely
+		string line;
 		if (!getline(file, line)) {
-			cerr << "User count line missing in file.\n";
-			return;
+			throw runtime_error("User count line missing in file.");
 		}
-
-		// Step 2: Extract only the first CSV token for user count
 		stringstream countStream(line);
 		string countToken;
 		getline(countStream, countToken, ',');
-
-		// Step 3: Validate that it's all digits
-		if (countToken.empty()) {
-			cerr << "Invalid user count in file: " << userFile << endl;
-			return;
+		if (countToken.empty() || !all_of(countToken.begin(), countToken.end(), ::isdigit)) {
+			throw runtime_error("Invalid user count in file: " + userFile);
 		}
-		for (char c : countToken) {
-			if (!isdigit(c)) {
-				cerr << "Invalid user count in file: " << userFile << endl;
-				return;
-			}
-		}
-
 		int count = stoi(countToken);
-
-		// Bounds check
 		if (count <= 0 || count > 150) {
-			cerr << "User count out of safe range: " << count << endl;
-			return;
+			throw runtime_error("User count out of safe range: " + to_string(count));
 		}
-
 		directory->userCount = count;
 
-		// Step 4: Clean up old memory safely
+		string currentEmail = "";
+		if (directory->currentUser != nullptr) {
+			currentEmail = directory->currentUser->getemail();
+		}
+
+		// Clean up old memory properly
 		if (directory->users != nullptr) {
-			for (int i = 0; i < 150; ++i) {
-				if (directory->users[i] != nullptr) {
-					delete directory->users[i];
-					directory->users[i] = nullptr;
-				}
+			for (int i = 0; i < directory->userCount; ++i) {
+				delete directory->users[i];
+				directory->users[i] = nullptr;
 			}
 			delete[] directory->users;
 			directory->users = nullptr;
 		}
 
-		// Step 5: Allocate new user array
-		directory->users = new Users * [directory->userCount];
-		for (int i = 0; i < directory->userCount; ++i) {
+		directory->users = new Users * [count];
+		for (int i = 0; i < count; ++i) {
 			directory->users[i] = new Users();
 		}
 
 		Users** userList = directory->users;
-
-		// Step 6: Skip the CSV header
 		if (!getline(file, line)) {
-			cerr << "CSV header missing.\n";
-			return;
+			throw runtime_error("CSV header missing.");
 		}
-
-		// Step 7: Parse user entries
 		int loaded = 0;
-		while (getline(file, line) && loaded < directory->userCount) {
+		while (getline(file, line) && loaded < count) {
 			stringstream ss(line);
 			string username, password, role, email;
-
-			getline(ss, username, ',');
-			getline(ss, password, ',');
-			getline(ss, role, ',');
-			getline(ss, email, ',');
-
+			if (!getline(ss, username, ',') || !getline(ss, password, ',') ||
+				!getline(ss, role, ',') || !getline(ss, email, ',')) {
+				throw runtime_error("Malformed user data at line " + to_string(loaded + 3));
+			}
 			userList[loaded]->username = username;
 			userList[loaded]->password = password;
 			userList[loaded]->role = role;
 			userList[loaded]->email = email;
+
+			// Remove trailing spaces
+			userList[loaded]->username.erase(remove_if(userList[loaded]->username.begin(), userList[loaded]->username.end(), ::isspace), userList[loaded]->username.end());
+			userList[loaded]->role.erase(remove_if(userList[loaded]->role.begin(), userList[loaded]->role.end(), ::isspace), userList[loaded]->role.end());
+			userList[loaded]->email.erase(remove_if(userList[loaded]->email.begin(), userList[loaded]->email.end(), ::isspace), userList[loaded]->email.end());
+
+			if (currentEmail != "" && email == currentEmail) {
+				directory->currentUser = userList[loaded];
+			}
 			loaded++;
 		}
-
-		cout << "Loaded " << loaded << " user(s) from file: " << userFile << endl;
+		if (currentEmail != "" && directory->currentUser == nullptr) {
+			directory->currentUser = nullptr;
+		}
 		file.close();
 	}
 
 
-	void saveProductsToFile()
-	{
+	void saveProductsToFile() {
 		Product** products = inventory->getProducts();
-		
 		ofstream file(productFile);
 
 		if (!file.is_open()) {
@@ -262,105 +246,117 @@ public:
 			return;
 		}
 
-		// Write CSV header
 		file << inventory->getProductCount() << endl;
-		file << "ID,Name,Category,Price,Quantity,Total Sales,Reviews\n";
+		file << "ID,Name,Category,Price,Quantity,Total Sales";
 
-		// Write each user's data
+		int maxReviews = 0;
+		// First pass to determine max number of review columns
 		for (int i = 0; i < inventory->getProductCount(); ++i) {
-			file << products[i]->getId() << ","
-				<< products[i]->getName() << ","
-				<< products[i]->getCategory() << ","
-				<< products[i]->getPrice() << ","
-				<< products[i]->getQuantity() << ","
-				<< products[i]->getTotalSales() << ",";
-			Review* reviews = products[i]->getAllReviews();
-			
+			if (products[i]->getReviewCount() > maxReviews)
+				maxReviews = products[i]->getReviewCount();
+		}
 
-			for (int j = 0; j < products[i]->getReviewCount(); j++)
-			{
-				file << reviews[j].getComment() << "|" 
-					<< reviews[j].getRating() << "|" 
-					<< reviews[j].getUsername() << "|"
-					<< reviews[j].getDate();
+		for (int i = 0; i < maxReviews; ++i) {
+			file << ",Review" << (i + 1) << "_User,Review" << (i + 1) << "_Rating,Review" << (i + 1) << "_Comment";
+		}
+		file << "\n";
+
+		for (int i = 0; i < inventory->getProductCount(); ++i) {
+			Product* p = products[i];
+			file << p->getId() << ","
+				<< p->getName() << ","
+				<< p->getCategory() << ","
+				<< p->getPrice() << ","
+				<< p->getQuantity() << ","
+				<< p->getTotalSales();
+
+			Review* reviews = p->getAllReviews();
+			for (int j = 0; j < p->getReviewCount(); ++j) {
+				file << "," << reviews[j].getUsername()
+					<< "," << reviews[j].getRating()
+					<< "," << reviews[j].getComment();
 			}
-			if (i< inventory->getProductCount()-1)
-			{
-				file << ",";
+			delete[] reviews;
+
+			// Fill remaining review columns if fewer than max
+			for (int j = p->getReviewCount(); j < maxReviews; ++j) {
+				file << ",,,";
 			}
+
 			file << "\n";
-			delete [] reviews;
 		}
 
 		file.close();
 		cout << "Data written to " << productFile << " successfully." << endl;
 	}
 
-	void loadProductsFromFile()
-	{
+	void loadProductsFromFile() {
 		ifstream file(productFile);
-		string line;
-
 		if (!file.is_open()) {
-			cerr << "Failed to open file: " << productFile << endl;
-			return;
+			cout << ("Failed to open file: " + productFile);
 		}
 
-		// Read and ignore product count
+		string line;
+
+		// Skip product count line
 		getline(file, line);
 
-		// Skip CSV header
+		// Read and split the header line to determine total columns
 		getline(file, line);
+		vector<string> headers;
+		stringstream headerStream(line);
+		string headerItem;
+		while (getline(headerStream, headerItem, ',')) {
+			headers.push_back(headerItem);
+		}
+
+		// Core product fields: ID, Name, Category, Price, Quantity, Total Sales
+		const int baseFields = 6;
 
 		while (getline(file, line)) {
+			vector<string> tokens;
 			stringstream ss(line);
-			string idStr, nameStr, categoryStr, priceStr, quantityStr, salesStr;
+			string token;
 
-			// Read core product fields
-			getline(ss, idStr, ',');
-			getline(ss, nameStr, ',');
-			getline(ss, categoryStr, ',');
-			getline(ss, priceStr, ',');
-			getline(ss, quantityStr, ',');
-			getline(ss, salesStr, ',');
+			// Split entire line by commas
+			while (getline(ss, token, ',')) {
+				tokens.push_back(token);
+			}
 
-			int id = atoi(idStr.c_str());
-			double price = atof(priceStr.c_str());
-			int quantity = atoi(quantityStr.c_str());
-			int totalSales = atoi(salesStr.c_str());
+			// Ignore lines with insufficient core fields
+			if (tokens.size() < baseFields) continue;
+
+			// Parse basic product data
+			int id = stoi(tokens[0]);
+			const char* name = tokens[1].c_str();
+			const char* category = tokens[2].c_str();
+			double price = stod(tokens[3]);
+			int quantity = stoi(tokens[4]);
+			int totalSales = stoi(tokens[5]);
 
 			// Add product to inventory
-			inventory->addProduct(id, nameStr.c_str(), categoryStr.c_str(), price, quantity);
-
-			// Access the product just added
-			Product** products = inventory->getProducts();
-			Product* product = products[inventory->getProductCount() - 1];
+			inventory->addProduct(id, name, category, price, quantity);
+			Product* product = inventory->getProducts()[inventory->getProductCount() - 1];
 			product->setTotalSales(totalSales);
 
-			// Parse and add reviews
-			string reviewField;
-			while (getline(ss, reviewField, ',')) {
-				stringstream reviewStream(reviewField);
-				string comment, ratingStr, username, dateStr;
+			// Parse reviews from remaining columns (each review = 3 fields)
+			for (int i = baseFields; i + 2 < tokens.size(); i += 3) {
+				string username = tokens[i];
+				string ratingStr = tokens[i + 1];
+				string comment = tokens[i + 2];
 
-				getline(reviewStream, comment, '|');
-				getline(reviewStream, ratingStr, '|');
-				getline(reviewStream, username, '|');
-				getline(reviewStream, dateStr, '|');
+				if (username.empty() || ratingStr.empty() || comment.empty()) {
+					continue; // Skip incomplete reviews
+				}
 
-				time_t date = atol(dateStr.c_str());
+				int rating = stoi(ratingStr);
 
-				Review review;
-				review.setComment(comment);
-				review.setRating(atoi(ratingStr.c_str()));
-				review.setUsername(username);
-				review.setDate(date);
-
-				product->addReview(review);
+				// Create and add review
+				Review r(username, rating, comment, time(0)); // date not used
+				product->addReview(r);
 			}
 		}
 
 		file.close();
-		cout << "Products loaded from " << productFile << " successfully." << endl;
 	}
 };

@@ -5,10 +5,11 @@
 using namespace inventoryManagementSystem;
 using namespace System::Windows::Forms;
 
-DashboardForm1::DashboardForm1(void)
+DashboardForm1::DashboardForm1(CompanyFile* company) : currentCompany(company)
 {
     InitializeComponent();
 }
+
 
 
  // Shifted this logout button to .cpp file because there was an issue regaridng the MyForm object and circular dependencies

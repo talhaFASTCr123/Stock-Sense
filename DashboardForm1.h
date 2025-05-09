@@ -1,8 +1,7 @@
 #pragma once
 #include <msclr/marshal_cppstd.h>
 using namespace msclr::interop;
-#include "Reviews.h"
-#include "Products.h"
+#include "CompanyFile.h"
 
 namespace inventoryManagementSystem {
 	using namespace System;
@@ -15,10 +14,8 @@ namespace inventoryManagementSystem {
 	public ref class DashboardForm1 : public System::Windows::Forms::Form
 	{
 	public:
-		DashboardForm1(void);
-	private: System::Windows::Forms::Label^ productNameLabel;
-	private: System::Windows::Forms::Label^ productPriceLabel;
-	private: System::Windows::Forms::Label^ productCategoryLabel;
+		DashboardForm1(CompanyFile* company);  // Constructor with company
+
 	private: System::Windows::Forms::Panel^ panel9;
 	private: System::Windows::Forms::Button^ buttonGenerate;
 	private: System::Windows::Forms::Label^ labelFileCount;
@@ -26,44 +23,83 @@ namespace inventoryManagementSystem {
 	private: System::Windows::Forms::Button^ buttonDelete;
 	private: System::Windows::Forms::Button^ buttonDownload;
 	private: System::Windows::Forms::Button^ buttonPreview;
+	private: System::Windows::Forms::PictureBox^ delIcon;
+	private: System::Windows::Forms::PictureBox^ copyIcon;
+	private: System::Windows::Forms::PictureBox^ editIcon;
+	private: System::Windows::Forms::Panel^ panel6;
+	private: System::Windows::Forms::Button^ button20;
+	private: System::Windows::Forms::Label^ label14;
+	private: System::Windows::Forms::Label^ label15;
+	private: System::Windows::Forms::Panel^ panel8;
+	private: System::Windows::Forms::Label^ productPriceLabel;
+	private: System::Windows::Forms::Label^ productCategoryLabel;
+	private: System::Windows::Forms::Label^ label19;
+	private: System::Windows::Forms::Label^ reviewName3;
+	private: System::Windows::Forms::Label^ reviewName2;
+	private: System::Windows::Forms::Label^ reviewName1;
+	private: System::Windows::Forms::Label^ productNameLabel;
+	private: System::Windows::Forms::Button^ button23;
+	private: System::Windows::Forms::Button^ button22;
+	private: System::Windows::Forms::Label^ reviewLabel3;
+	private: System::Windows::Forms::Label^ reviewLabel2;
+	private: System::Windows::Forms::Label^ reviewLabel1;
+	public:
+
+	protected:
+	private: System::Windows::Forms::Panel^ panel7;
+	protected:
+	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::Button^ button21;
+	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Panel^ panel10;
-	private: System::Windows::Forms::ComboBox^ comboBoxFilter;
-	private: System::Windows::Forms::Button^ buttonAddProduct;
+	private: System::Windows::Forms::TextBox^ textBox8;
 	private: System::Windows::Forms::Panel^ panel11;
+	private: System::Windows::Forms::Button^ confirmProduct;
 	private: System::Windows::Forms::TextBox^ textBox7;
 	private: System::Windows::Forms::TextBox^ textBox6;
 	private: System::Windows::Forms::TextBox^ textBox5;
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::Button^ confirmProduct;
-	private: System::Windows::Forms::TextBox^ textBox8;
-	private: System::Windows::Forms::PictureBox^ delIcon;
-	private: System::Windows::Forms::PictureBox^ copyIcon;
-	private: System::Windows::Forms::PictureBox^ editIcon;
-	public:
+	private: System::Windows::Forms::ComboBox^ comboBoxFilter;
+	private: System::Windows::Forms::Button^ buttonAddProduct;
+	private: System::Windows::Forms::Panel^ panel3;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::Label^ label5;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Panel^ graphPanel3;
+	private: System::Windows::Forms::Panel^ graphPanel4;
 
-	protected:
-		Inventory* sampleInventory;
+
+	private: System::Windows::Forms::Panel^ graphPanel2;
+
+	private: System::Windows::Forms::Panel^ graphPanel1;
+
+	private: System::Windows::Forms::Label^ prodLabel1;
+	private: System::Windows::Forms::Panel^ graphPanel5;
+
+	private: System::Windows::Forms::Label^ prodLabel2;
+	private: System::Windows::Forms::Label^ prodLabel5;
+
+	private: System::Windows::Forms::Label^ prodLabel4;
+
+	private: System::Windows::Forms::Label^ prodLabel3;
+		   CompanyFile* currentCompany;
 		~DashboardForm1()
 		{
 			if (components)
 			{
 				delete components;
-				delete sampleInventory;
 			}
 		}
 
 	private:
 	System::ComponentModel::Container^ components;
-	private: System::Windows::Forms::Panel^ panel6;
-	private: System::Windows::Forms::Panel^ panel7;
-	private: System::Windows::Forms::CheckBox^ checkBox1;
-	private: System::Windows::Forms::Button^ button21;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button20;
-	private: System::Windows::Forms::Label^ label14;
-	private: System::Windows::Forms::Label^ label15;
 	private: System::Windows::Forms::PictureBox^ adminBackgroundUI;
 	private: System::Windows::Forms::PictureBox^ addMemberUI;
 	private: System::Windows::Forms::Button^ adminTrashUI;
@@ -77,17 +113,6 @@ namespace inventoryManagementSystem {
 	private: System::Windows::Forms::Button^ button17;
 	private: System::Windows::Forms::Button^ button16;
 	private: System::Windows::Forms::Button^ button15;
-	private: System::Windows::Forms::Panel^ panel8;
-	private: System::Windows::Forms::Label^ label19;
-	private: System::Windows::Forms::Label^ reviewName3;
-	private: System::Windows::Forms::Label^ reviewName2;
-	private: System::Windows::Forms::Label^ reviewName1;
-
-	private: System::Windows::Forms::Button^ button23;
-	private: System::Windows::Forms::Button^ button22;
-	private: System::Windows::Forms::Label^ reviewLabel3;
-	private: System::Windows::Forms::Label^ reviewLabel2;
-	private: System::Windows::Forms::Label^ reviewLabel1;
 	private: System::Windows::Forms::PictureBox^ rating0;
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::PictureBox^ rating5;
@@ -112,15 +137,15 @@ namespace inventoryManagementSystem {
 	private: System::Windows::Forms::Label^ label11;
 	private: System::Windows::Forms::Label^ label10;
 	private: System::Windows::Forms::Button^ button10;
-	private: System::Windows::Forms::Panel^ panel3;
-	private: System::Windows::Forms::Label^ label9;
-	private: System::Windows::Forms::Label^ label8;
-	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label2;
+
+
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Panel^ panel2;
 	private: System::Windows::Forms::Button^ button8;
@@ -130,7 +155,7 @@ namespace inventoryManagementSystem {
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::Button^ button2;
+
 	private: System::Windows::Forms::Button^ button1;
 
 		   System::Windows::Forms::Button^ currentlyActiveButton;
@@ -139,15 +164,6 @@ namespace inventoryManagementSystem {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DashboardForm1::typeid));
-			this->panel6 = (gcnew System::Windows::Forms::Panel());
-			this->panel7 = (gcnew System::Windows::Forms::Panel());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->button21 = (gcnew System::Windows::Forms::Button());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->button20 = (gcnew System::Windows::Forms::Button());
-			this->label14 = (gcnew System::Windows::Forms::Label());
-			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->adminBackgroundUI = (gcnew System::Windows::Forms::PictureBox());
 			this->addMemberUI = (gcnew System::Windows::Forms::PictureBox());
 			this->adminTrashUI = (gcnew System::Windows::Forms::Button());
@@ -161,6 +177,47 @@ namespace inventoryManagementSystem {
 			this->button17 = (gcnew System::Windows::Forms::Button());
 			this->button16 = (gcnew System::Windows::Forms::Button());
 			this->button15 = (gcnew System::Windows::Forms::Button());
+			this->rating0 = (gcnew System::Windows::Forms::PictureBox());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->prodLabel5 = (gcnew System::Windows::Forms::Label());
+			this->prodLabel4 = (gcnew System::Windows::Forms::Label());
+			this->prodLabel3 = (gcnew System::Windows::Forms::Label());
+			this->prodLabel2 = (gcnew System::Windows::Forms::Label());
+			this->prodLabel1 = (gcnew System::Windows::Forms::Label());
+			this->graphPanel5 = (gcnew System::Windows::Forms::Panel());
+			this->graphPanel4 = (gcnew System::Windows::Forms::Panel());
+			this->graphPanel3 = (gcnew System::Windows::Forms::Panel());
+			this->graphPanel2 = (gcnew System::Windows::Forms::Panel());
+			this->graphPanel1 = (gcnew System::Windows::Forms::Panel());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->panel10 = (gcnew System::Windows::Forms::Panel());
+			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
+			this->panel11 = (gcnew System::Windows::Forms::Panel());
+			this->confirmProduct = (gcnew System::Windows::Forms::Button());
+			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->comboBoxFilter = (gcnew System::Windows::Forms::ComboBox());
+			this->buttonAddProduct = (gcnew System::Windows::Forms::Button());
+			this->panel6 = (gcnew System::Windows::Forms::Panel());
+			this->panel7 = (gcnew System::Windows::Forms::Panel());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->button21 = (gcnew System::Windows::Forms::Button());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->button20 = (gcnew System::Windows::Forms::Button());
+			this->label14 = (gcnew System::Windows::Forms::Label());
+			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->panel8 = (gcnew System::Windows::Forms::Panel());
 			this->productPriceLabel = (gcnew System::Windows::Forms::Label());
 			this->productCategoryLabel = (gcnew System::Windows::Forms::Label());
@@ -174,22 +231,9 @@ namespace inventoryManagementSystem {
 			this->reviewLabel3 = (gcnew System::Windows::Forms::Label());
 			this->reviewLabel2 = (gcnew System::Windows::Forms::Label());
 			this->reviewLabel1 = (gcnew System::Windows::Forms::Label());
-			this->rating0 = (gcnew System::Windows::Forms::PictureBox());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->delIcon = (gcnew System::Windows::Forms::PictureBox());
 			this->copyIcon = (gcnew System::Windows::Forms::PictureBox());
 			this->editIcon = (gcnew System::Windows::Forms::PictureBox());
-			this->panel10 = (gcnew System::Windows::Forms::Panel());
-			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
-			this->panel11 = (gcnew System::Windows::Forms::Panel());
-			this->confirmProduct = (gcnew System::Windows::Forms::Button());
-			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->comboBoxFilter = (gcnew System::Windows::Forms::ComboBox());
-			this->buttonAddProduct = (gcnew System::Windows::Forms::Button());
 			this->buttonDelete = (gcnew System::Windows::Forms::Button());
 			this->buttonDownload = (gcnew System::Windows::Forms::Button());
 			this->buttonPreview = (gcnew System::Windows::Forms::Button());
@@ -219,15 +263,6 @@ namespace inventoryManagementSystem {
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->button10 = (gcnew System::Windows::Forms::Button());
-			this->panel3 = (gcnew System::Windows::Forms::Panel());
-			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->button8 = (gcnew System::Windows::Forms::Button());
@@ -237,22 +272,22 @@ namespace inventoryManagementSystem {
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->panel6->SuspendLayout();
-			this->panel7->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->adminBackgroundUI))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addMemberUI))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->employeeBackgroundUI))->BeginInit();
 			this->panel5->SuspendLayout();
-			this->panel8->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->rating0))->BeginInit();
 			this->panel1->SuspendLayout();
+			this->panel3->SuspendLayout();
+			this->panel10->SuspendLayout();
+			this->panel11->SuspendLayout();
+			this->panel6->SuspendLayout();
+			this->panel7->SuspendLayout();
+			this->panel8->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->delIcon))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->copyIcon))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->editIcon))->BeginInit();
-			this->panel10->SuspendLayout();
-			this->panel11->SuspendLayout();
 			this->panel9->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->fileBoxBackground))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->rating5))->BeginInit();
@@ -268,129 +303,8 @@ namespace inventoryManagementSystem {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->toggleOff))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->toggleOn))->BeginInit();
 			this->panel4->SuspendLayout();
-			this->panel3->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->SuspendLayout();
-			// 
-			// panel6
-			// 
-			this->panel6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel6.BackgroundImage")));
-			this->panel6->Controls->Add(this->panel7);
-			this->panel6->Controls->Add(this->button20);
-			this->panel6->Controls->Add(this->label14);
-			this->panel6->Controls->Add(this->label15);
-			this->panel6->Location = System::Drawing::Point(257, 0);
-			this->panel6->Name = L"panel6";
-			this->panel6->Size = System::Drawing::Size(108, 86);
-			this->panel6->TabIndex = 15;
-			// 
-			// panel7
-			// 
-			this->panel7->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel7.BackgroundImage")));
-			this->panel7->Controls->Add(this->checkBox1);
-			this->panel7->Controls->Add(this->button21);
-			this->panel7->Controls->Add(this->textBox2);
-			this->panel7->Controls->Add(this->textBox1);
-			this->panel7->Location = System::Drawing::Point(245, 45);
-			this->panel7->Name = L"panel7";
-			this->panel7->Size = System::Drawing::Size(567, 685);
-			this->panel7->TabIndex = 20;
-			// 
-			// checkBox1
-			// 
-			this->checkBox1->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->checkBox1->FlatAppearance->BorderSize = 0;
-			this->checkBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->checkBox1->Location = System::Drawing::Point(385, 463);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(12, 13);
-			this->checkBox1->TabIndex = 3;
-			this->checkBox1->UseVisualStyleBackColor = true;
-			// 
-			// button21
-			// 
-			this->button21->BackColor = System::Drawing::Color::Transparent;
-			this->button21->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button21->FlatAppearance->BorderSize = 0;
-			this->button21->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button21->Location = System::Drawing::Point(152, 501);
-			this->button21->Name = L"button21";
-			this->button21->Size = System::Drawing::Size(256, 41);
-			this->button21->TabIndex = 2;
-			this->button21->UseVisualStyleBackColor = false;
-			this->button21->Click += gcnew System::EventHandler(this, &DashboardForm1::button21_Click);
-			// 
-			// textBox2
-			// 
-			this->textBox2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(55)), static_cast<System::Int32>(static_cast<System::Byte>(55)),
-				static_cast<System::Int32>(static_cast<System::Byte>(55)));
-			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox2->ForeColor = System::Drawing::Color::White;
-			this->textBox2->Location = System::Drawing::Point(152, 408);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(245, 20);
-			this->textBox2->TabIndex = 1;
-			this->textBox2->TabStop = false;
-			// 
-			// textBox1
-			// 
-			this->textBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(55)), static_cast<System::Int32>(static_cast<System::Byte>(55)),
-				static_cast<System::Int32>(static_cast<System::Byte>(55)));
-			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox1->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox1->ForeColor = System::Drawing::Color::White;
-			this->textBox1->Location = System::Drawing::Point(152, 322);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(245, 20);
-			this->textBox1->TabIndex = 0;
-			this->textBox1->TabStop = false;
-			// 
-			// button20
-			// 
-			this->button20->BackColor = System::Drawing::Color::Transparent;
-			this->button20->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button20.BackgroundImage")));
-			this->button20->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button20->FlatAppearance->BorderSize = 0;
-			this->button20->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button20->Location = System::Drawing::Point(864, 316);
-			this->button20->Name = L"button20";
-			this->button20->Size = System::Drawing::Size(105, 34);
-			this->button20->TabIndex = 5;
-			this->button20->UseVisualStyleBackColor = false;
-			this->button20->Click += gcnew System::EventHandler(this, &DashboardForm1::button20_Click);
-			// 
-			// label14
-			// 
-			this->label14->AutoSize = true;
-			this->label14->BackColor = System::Drawing::Color::Transparent;
-			this->label14->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label14->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label14->Location = System::Drawing::Point(304, 272);
-			this->label14->Margin = System::Windows::Forms::Padding(0);
-			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(167, 23);
-			this->label14->TabIndex = 24;
-			this->label14->Text = L"talhasbzzz@gmail.com";
-			// 
-			// label15
-			// 
-			this->label15->AutoSize = true;
-			this->label15->BackColor = System::Drawing::Color::Transparent;
-			this->label15->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label15->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label15->Location = System::Drawing::Point(140, 272);
-			this->label15->Name = L"label15";
-			this->label15->Size = System::Drawing::Size(99, 23);
-			this->label15->TabIndex = 23;
-			this->label15->Text = L"talha-hamid";
-			this->label15->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// adminBackgroundUI
 			// 
@@ -566,6 +480,568 @@ namespace inventoryManagementSystem {
 			this->button15->UseVisualStyleBackColor = false;
 			this->button15->Click += gcnew System::EventHandler(this, &DashboardForm1::button15_Click);
 			// 
+			// rating0
+			// 
+			this->rating0->BackColor = System::Drawing::Color::Transparent;
+			this->rating0->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"rating0.Image")));
+			this->rating0->Location = System::Drawing::Point(1292, 105);
+			this->rating0->Name = L"rating0";
+			this->rating0->Size = System::Drawing::Size(144, 31);
+			this->rating0->TabIndex = 39;
+			this->rating0->TabStop = false;
+			// 
+			// panel1
+			// 
+			this->panel1->BackColor = System::Drawing::Color::White;
+			this->panel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel1.BackgroundImage")));
+			this->panel1->Controls->Add(this->panel3);
+			this->panel1->Controls->Add(this->panel10);
+			this->panel1->Controls->Add(this->panel6);
+			this->panel1->Controls->Add(this->panel8);
+			this->panel1->Controls->Add(this->delIcon);
+			this->panel1->Controls->Add(this->copyIcon);
+			this->panel1->Controls->Add(this->editIcon);
+			this->panel1->Controls->Add(this->buttonDelete);
+			this->panel1->Controls->Add(this->buttonDownload);
+			this->panel1->Controls->Add(this->buttonPreview);
+			this->panel1->Controls->Add(this->panel9);
+			this->panel1->Controls->Add(this->rating5);
+			this->panel1->Controls->Add(this->rating45);
+			this->panel1->Controls->Add(this->rating4);
+			this->panel1->Controls->Add(this->rating35);
+			this->panel1->Controls->Add(this->rating3);
+			this->panel1->Controls->Add(this->rating25);
+			this->panel1->Controls->Add(this->rating2);
+			this->panel1->Controls->Add(this->rating15);
+			this->panel1->Controls->Add(this->rating1);
+			this->panel1->Controls->Add(this->rating05);
+			this->panel1->Controls->Add(this->rating0);
+			this->panel1->Controls->Add(this->panel5);
+			this->panel1->Controls->Add(this->employeeBackgroundUI);
+			this->panel1->Controls->Add(this->demotionUI);
+			this->panel1->Controls->Add(this->employeeTrashUI);
+			this->panel1->Controls->Add(this->promotionUI);
+			this->panel1->Controls->Add(this->adminTrashUI);
+			this->panel1->Controls->Add(this->addMemberUI);
+			this->panel1->Controls->Add(this->adminBackgroundUI);
+			this->panel1->Controls->Add(this->toggleOff);
+			this->panel1->Controls->Add(this->toggleOn);
+			this->panel1->Controls->Add(this->panel4);
+			this->panel1->Controls->Add(this->label1);
+			this->panel1->Controls->Add(this->panel2);
+			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1286, 752);
+			this->panel1->TabIndex = 0;
+			// 
+			// panel3
+			// 
+			this->panel3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel3.BackgroundImage")));
+			this->panel3->Controls->Add(this->prodLabel5);
+			this->panel3->Controls->Add(this->prodLabel4);
+			this->panel3->Controls->Add(this->prodLabel3);
+			this->panel3->Controls->Add(this->prodLabel2);
+			this->panel3->Controls->Add(this->prodLabel1);
+			this->panel3->Controls->Add(this->graphPanel5);
+			this->panel3->Controls->Add(this->graphPanel4);
+			this->panel3->Controls->Add(this->graphPanel3);
+			this->panel3->Controls->Add(this->graphPanel2);
+			this->panel3->Controls->Add(this->graphPanel1);
+			this->panel3->Controls->Add(this->label9);
+			this->panel3->Controls->Add(this->label8);
+			this->panel3->Controls->Add(this->label7);
+			this->panel3->Controls->Add(this->label6);
+			this->panel3->Controls->Add(this->label5);
+			this->panel3->Controls->Add(this->label4);
+			this->panel3->Controls->Add(this->label3);
+			this->panel3->Controls->Add(this->label2);
+			this->panel3->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->panel3->Location = System::Drawing::Point(257, 0);
+			this->panel3->Name = L"panel3";
+			this->panel3->Size = System::Drawing::Size(1029, 752);
+			this->panel3->TabIndex = 63;
+			// 
+			// prodLabel5
+			// 
+			this->prodLabel5->AutoEllipsis = true;
+			this->prodLabel5->BackColor = System::Drawing::Color::Transparent;
+			this->prodLabel5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->prodLabel5->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->prodLabel5->ForeColor = System::Drawing::Color::White;
+			this->prodLabel5->Location = System::Drawing::Point(778, 651);
+			this->prodLabel5->Name = L"prodLabel5";
+			this->prodLabel5->Size = System::Drawing::Size(112, 37);
+			this->prodLabel5->TabIndex = 16;
+			this->prodLabel5->Text = L"Cows";
+			this->prodLabel5->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// prodLabel4
+			// 
+			this->prodLabel4->AutoEllipsis = true;
+			this->prodLabel4->BackColor = System::Drawing::Color::Transparent;
+			this->prodLabel4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->prodLabel4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->prodLabel4->ForeColor = System::Drawing::Color::White;
+			this->prodLabel4->Location = System::Drawing::Point(609, 651);
+			this->prodLabel4->Name = L"prodLabel4";
+			this->prodLabel4->Size = System::Drawing::Size(112, 37);
+			this->prodLabel4->TabIndex = 15;
+			this->prodLabel4->Text = L"Cows";
+			this->prodLabel4->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// prodLabel3
+			// 
+			this->prodLabel3->AutoEllipsis = true;
+			this->prodLabel3->BackColor = System::Drawing::Color::Transparent;
+			this->prodLabel3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->prodLabel3->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->prodLabel3->ForeColor = System::Drawing::Color::White;
+			this->prodLabel3->Location = System::Drawing::Point(440, 651);
+			this->prodLabel3->Name = L"prodLabel3";
+			this->prodLabel3->Size = System::Drawing::Size(112, 37);
+			this->prodLabel3->TabIndex = 14;
+			this->prodLabel3->Text = L"Cows";
+			this->prodLabel3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// prodLabel2
+			// 
+			this->prodLabel2->AutoEllipsis = true;
+			this->prodLabel2->BackColor = System::Drawing::Color::Transparent;
+			this->prodLabel2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->prodLabel2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->prodLabel2->ForeColor = System::Drawing::Color::White;
+			this->prodLabel2->Location = System::Drawing::Point(271, 651);
+			this->prodLabel2->Name = L"prodLabel2";
+			this->prodLabel2->Size = System::Drawing::Size(112, 37);
+			this->prodLabel2->TabIndex = 13;
+			this->prodLabel2->Text = L"Cows";
+			this->prodLabel2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// prodLabel1
+			// 
+			this->prodLabel1->AutoEllipsis = true;
+			this->prodLabel1->BackColor = System::Drawing::Color::Transparent;
+			this->prodLabel1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->prodLabel1->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->prodLabel1->ForeColor = System::Drawing::Color::White;
+			this->prodLabel1->Location = System::Drawing::Point(102, 651);
+			this->prodLabel1->Name = L"prodLabel1";
+			this->prodLabel1->Size = System::Drawing::Size(112, 37);
+			this->prodLabel1->TabIndex = 12;
+			this->prodLabel1->Text = L"Cows";
+			this->prodLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// graphPanel5
+			// 
+			this->graphPanel5->BackColor = System::Drawing::Color::Gold;
+			this->graphPanel5->Location = System::Drawing::Point(780, 471);
+			this->graphPanel5->Name = L"graphPanel5";
+			this->graphPanel5->Size = System::Drawing::Size(109, 174);
+			this->graphPanel5->TabIndex = 11;
+			// 
+			// graphPanel4
+			// 
+			this->graphPanel4->BackColor = System::Drawing::Color::Gold;
+			this->graphPanel4->Location = System::Drawing::Point(611, 471);
+			this->graphPanel4->Name = L"graphPanel4";
+			this->graphPanel4->Size = System::Drawing::Size(109, 174);
+			this->graphPanel4->TabIndex = 10;
+			// 
+			// graphPanel3
+			// 
+			this->graphPanel3->BackColor = System::Drawing::Color::Gold;
+			this->graphPanel3->Location = System::Drawing::Point(442, 471);
+			this->graphPanel3->Name = L"graphPanel3";
+			this->graphPanel3->Size = System::Drawing::Size(109, 174);
+			this->graphPanel3->TabIndex = 9;
+			// 
+			// graphPanel2
+			// 
+			this->graphPanel2->BackColor = System::Drawing::Color::Gold;
+			this->graphPanel2->Location = System::Drawing::Point(273, 471);
+			this->graphPanel2->Name = L"graphPanel2";
+			this->graphPanel2->Size = System::Drawing::Size(109, 174);
+			this->graphPanel2->TabIndex = 9;
+			// 
+			// graphPanel1
+			// 
+			this->graphPanel1->BackColor = System::Drawing::Color::Gold;
+			this->graphPanel1->Location = System::Drawing::Point(104, 471);
+			this->graphPanel1->Name = L"graphPanel1";
+			this->graphPanel1->Size = System::Drawing::Size(109, 174);
+			this->graphPanel1->TabIndex = 8;
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->BackColor = System::Drawing::Color::Transparent;
+			this->label9->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label9->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
+			this->label9->ForeColor = System::Drawing::Color::White;
+			this->label9->Location = System::Drawing::Point(951, 145);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(21, 10);
+			this->label9->TabIndex = 7;
+			this->label9->Text = L"20%";
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->BackColor = System::Drawing::Color::Transparent;
+			this->label8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label8->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
+			this->label8->ForeColor = System::Drawing::Color::White;
+			this->label8->Location = System::Drawing::Point(621, 145);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(21, 10);
+			this->label8->TabIndex = 6;
+			this->label8->Text = L"20%";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->BackColor = System::Drawing::Color::Transparent;
+			this->label7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label7->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
+			this->label7->ForeColor = System::Drawing::Color::White;
+			this->label7->Location = System::Drawing::Point(269, 145);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(21, 10);
+			this->label7->TabIndex = 5;
+			this->label7->Text = L"20%";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->BackColor = System::Drawing::Color::Transparent;
+			this->label6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label6->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 5.5F, System::Drawing::FontStyle::Bold));
+			this->label6->ForeColor = System::Drawing::Color::White;
+			this->label6->Location = System::Drawing::Point(574, 413);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(41, 14);
+			this->label6->TabIndex = 4;
+			this->label6->Text = L"Total";
+			// 
+			// label5
+			// 
+			this->label5->BackColor = System::Drawing::Color::Transparent;
+			this->label5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label5->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 14.2F, System::Drawing::FontStyle::Bold));
+			this->label5->ForeColor = System::Drawing::Color::Black;
+			this->label5->Location = System::Drawing::Point(398, 402);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(170, 34);
+			this->label5->TabIndex = 3;
+			this->label5->Text = L"100,000,00";
+			this->label5->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// label4
+			// 
+			this->label4->BackColor = System::Drawing::Color::Transparent;
+			this->label4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 16.2F, System::Drawing::FontStyle::Bold));
+			this->label4->ForeColor = System::Drawing::Color::White;
+			this->label4->Location = System::Drawing::Point(828, 208);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(161, 34);
+			this->label4->TabIndex = 2;
+			this->label4->Text = L"10";
+			this->label4->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// label3
+			// 
+			this->label3->BackColor = System::Drawing::Color::Transparent;
+			this->label3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label3->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 16.2F, System::Drawing::FontStyle::Bold));
+			this->label3->ForeColor = System::Drawing::Color::White;
+			this->label3->Location = System::Drawing::Point(479, 206);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(171, 40);
+			this->label3->TabIndex = 1;
+			this->label3->Text = L"10";
+			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// label2
+			// 
+			this->label2->BackColor = System::Drawing::Color::Transparent;
+			this->label2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 16.2F, System::Drawing::FontStyle::Bold));
+			this->label2->ForeColor = System::Drawing::Color::White;
+			this->label2->Location = System::Drawing::Point(99, 203);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(206, 39);
+			this->label2->TabIndex = 0;
+			this->label2->Text = L"50";
+			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// panel10
+			// 
+			this->panel10->AutoScroll = true;
+			this->panel10->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel10.BackgroundImage")));
+			this->panel10->Controls->Add(this->textBox8);
+			this->panel10->Controls->Add(this->panel11);
+			this->panel10->Controls->Add(this->comboBoxFilter);
+			this->panel10->Controls->Add(this->buttonAddProduct);
+			this->panel10->Location = System::Drawing::Point(365, 605);
+			this->panel10->Name = L"panel10";
+			this->panel10->Size = System::Drawing::Size(62, 50);
+			this->panel10->TabIndex = 62;
+			// 
+			// textBox8
+			// 
+			this->textBox8->BackColor = System::Drawing::Color::White;
+			this->textBox8->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox8->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox8->ForeColor = System::Drawing::Color::White;
+			this->textBox8->Location = System::Drawing::Point(75, 227);
+			this->textBox8->Name = L"textBox8";
+			this->textBox8->Size = System::Drawing::Size(219, 20);
+			this->textBox8->TabIndex = 11;
+			// 
+			// panel11
+			// 
+			this->panel11->BackColor = System::Drawing::Color::Black;
+			this->panel11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel11.BackgroundImage")));
+			this->panel11->Controls->Add(this->confirmProduct);
+			this->panel11->Controls->Add(this->textBox7);
+			this->panel11->Controls->Add(this->textBox6);
+			this->panel11->Controls->Add(this->textBox5);
+			this->panel11->Controls->Add(this->textBox4);
+			this->panel11->Controls->Add(this->textBox3);
+			this->panel11->Location = System::Drawing::Point(287, 76);
+			this->panel11->Name = L"panel11";
+			this->panel11->Size = System::Drawing::Size(549, 654);
+			this->panel11->TabIndex = 3;
+			// 
+			// confirmProduct
+			// 
+			this->confirmProduct->BackColor = System::Drawing::Color::Transparent;
+			this->confirmProduct->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->confirmProduct->FlatAppearance->BorderSize = 0;
+			this->confirmProduct->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->confirmProduct->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->confirmProduct->Location = System::Drawing::Point(185, 568);
+			this->confirmProduct->Name = L"confirmProduct";
+			this->confirmProduct->Size = System::Drawing::Size(164, 41);
+			this->confirmProduct->TabIndex = 9;
+			this->confirmProduct->UseVisualStyleBackColor = false;
+			this->confirmProduct->Click += gcnew System::EventHandler(this, &DashboardForm1::confirmAddProduct_Click);
+			// 
+			// textBox7
+			// 
+			this->textBox7->BackColor = System::Drawing::Color::Black;
+			this->textBox7->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox7->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox7->ForeColor = System::Drawing::Color::White;
+			this->textBox7->Location = System::Drawing::Point(140, 485);
+			this->textBox7->Name = L"textBox7";
+			this->textBox7->Size = System::Drawing::Size(250, 20);
+			this->textBox7->TabIndex = 8;
+			// 
+			// textBox6
+			// 
+			this->textBox6->BackColor = System::Drawing::Color::Black;
+			this->textBox6->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox6->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox6->ForeColor = System::Drawing::Color::White;
+			this->textBox6->Location = System::Drawing::Point(140, 416);
+			this->textBox6->Name = L"textBox6";
+			this->textBox6->Size = System::Drawing::Size(250, 20);
+			this->textBox6->TabIndex = 7;
+			// 
+			// textBox5
+			// 
+			this->textBox5->BackColor = System::Drawing::Color::Black;
+			this->textBox5->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox5->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox5->ForeColor = System::Drawing::Color::White;
+			this->textBox5->Location = System::Drawing::Point(140, 347);
+			this->textBox5->Name = L"textBox5";
+			this->textBox5->Size = System::Drawing::Size(250, 20);
+			this->textBox5->TabIndex = 6;
+			// 
+			// textBox4
+			// 
+			this->textBox4->BackColor = System::Drawing::Color::Black;
+			this->textBox4->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox4->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox4->ForeColor = System::Drawing::Color::White;
+			this->textBox4->Location = System::Drawing::Point(140, 284);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(250, 20);
+			this->textBox4->TabIndex = 5;
+			// 
+			// textBox3
+			// 
+			this->textBox3->BackColor = System::Drawing::Color::Black;
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox3->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox3->ForeColor = System::Drawing::Color::White;
+			this->textBox3->Location = System::Drawing::Point(141, 214);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(250, 20);
+			this->textBox3->TabIndex = 4;
+			// 
+			// comboBoxFilter
+			// 
+			this->comboBoxFilter->BackColor = System::Drawing::Color::White;
+			this->comboBoxFilter->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->comboBoxFilter->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBoxFilter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->comboBoxFilter->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->comboBoxFilter->FormattingEnabled = true;
+			this->comboBoxFilter->Location = System::Drawing::Point(690, 222);
+			this->comboBoxFilter->Name = L"comboBoxFilter";
+			this->comboBoxFilter->Size = System::Drawing::Size(119, 27);
+			this->comboBoxFilter->TabIndex = 2;
+			// 
+			// buttonAddProduct
+			// 
+			this->buttonAddProduct->BackColor = System::Drawing::Color::Transparent;
+			this->buttonAddProduct->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->buttonAddProduct->FlatAppearance->BorderSize = 0;
+			this->buttonAddProduct->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->buttonAddProduct->Location = System::Drawing::Point(831, 220);
+			this->buttonAddProduct->Name = L"buttonAddProduct";
+			this->buttonAddProduct->Size = System::Drawing::Size(136, 32);
+			this->buttonAddProduct->TabIndex = 1;
+			this->buttonAddProduct->UseVisualStyleBackColor = false;
+			this->buttonAddProduct->Click += gcnew System::EventHandler(this, &DashboardForm1::buttonAddProduct_Click);
+			// 
+			// panel6
+			// 
+			this->panel6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel6.BackgroundImage")));
+			this->panel6->Controls->Add(this->panel7);
+			this->panel6->Controls->Add(this->button20);
+			this->panel6->Controls->Add(this->label14);
+			this->panel6->Controls->Add(this->label15);
+			this->panel6->Location = System::Drawing::Point(257, 0);
+			this->panel6->Name = L"panel6";
+			this->panel6->Size = System::Drawing::Size(204, 127);
+			this->panel6->TabIndex = 61;
+			// 
+			// panel7
+			// 
+			this->panel7->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel7.BackgroundImage")));
+			this->panel7->Controls->Add(this->checkBox1);
+			this->panel7->Controls->Add(this->button21);
+			this->panel7->Controls->Add(this->textBox2);
+			this->panel7->Controls->Add(this->textBox1);
+			this->panel7->Location = System::Drawing::Point(287, 29);
+			this->panel7->Name = L"panel7";
+			this->panel7->Size = System::Drawing::Size(567, 685);
+			this->panel7->TabIndex = 25;
+			// 
+			// checkBox1
+			// 
+			this->checkBox1->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->checkBox1->FlatAppearance->BorderSize = 0;
+			this->checkBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->checkBox1->Location = System::Drawing::Point(385, 463);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(12, 13);
+			this->checkBox1->TabIndex = 3;
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
+			// button21
+			// 
+			this->button21->BackColor = System::Drawing::Color::Transparent;
+			this->button21->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button21->FlatAppearance->BorderSize = 0;
+			this->button21->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button21->Location = System::Drawing::Point(152, 501);
+			this->button21->Name = L"button21";
+			this->button21->Size = System::Drawing::Size(256, 41);
+			this->button21->TabIndex = 2;
+			this->button21->UseVisualStyleBackColor = false;
+			this->button21->Click += gcnew System::EventHandler(this, &DashboardForm1::button21_Click);
+			// 
+			// textBox2
+			// 
+			this->textBox2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(55)), static_cast<System::Int32>(static_cast<System::Byte>(55)),
+				static_cast<System::Int32>(static_cast<System::Byte>(55)));
+			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox2->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox2->ForeColor = System::Drawing::Color::White;
+			this->textBox2->Location = System::Drawing::Point(152, 408);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(245, 20);
+			this->textBox2->TabIndex = 1;
+			this->textBox2->TabStop = false;
+			// 
+			// textBox1
+			// 
+			this->textBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(55)), static_cast<System::Int32>(static_cast<System::Byte>(55)),
+				static_cast<System::Int32>(static_cast<System::Byte>(55)));
+			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox1->Cursor = System::Windows::Forms::Cursors::Cross;
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox1->ForeColor = System::Drawing::Color::White;
+			this->textBox1->Location = System::Drawing::Point(152, 322);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(245, 20);
+			this->textBox1->TabIndex = 0;
+			this->textBox1->TabStop = false;
+			// 
+			// button20
+			// 
+			this->button20->BackColor = System::Drawing::Color::Transparent;
+			this->button20->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button20.BackgroundImage")));
+			this->button20->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button20->FlatAppearance->BorderSize = 0;
+			this->button20->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button20->Location = System::Drawing::Point(864, 316);
+			this->button20->Name = L"button20";
+			this->button20->Size = System::Drawing::Size(105, 34);
+			this->button20->TabIndex = 5;
+			this->button20->UseVisualStyleBackColor = false;
+			this->button20->Click += gcnew System::EventHandler(this, &DashboardForm1::button20_Click);
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->BackColor = System::Drawing::Color::Transparent;
+			this->label14->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label14->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label14->Location = System::Drawing::Point(304, 272);
+			this->label14->Margin = System::Windows::Forms::Padding(0);
+			this->label14->Name = L"label14";
+			this->label14->Size = System::Drawing::Size(167, 23);
+			this->label14->TabIndex = 24;
+			this->label14->Text = L"talhasbzzz@gmail.com";
+			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->BackColor = System::Drawing::Color::Transparent;
+			this->label15->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label15->Font = (gcnew System::Drawing::Font(L"Poppins SemiBold", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label15->Location = System::Drawing::Point(140, 272);
+			this->label15->Name = L"label15";
+			this->label15->Size = System::Drawing::Size(99, 23);
+			this->label15->TabIndex = 23;
+			this->label15->Text = L"talha-hamid";
+			this->label15->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// panel8
 			// 
 			this->panel8->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel8.BackgroundImage")));
@@ -581,10 +1057,10 @@ namespace inventoryManagementSystem {
 			this->panel8->Controls->Add(this->reviewLabel3);
 			this->panel8->Controls->Add(this->reviewLabel2);
 			this->panel8->Controls->Add(this->reviewLabel1);
-			this->panel8->Location = System::Drawing::Point(707, 95);
+			this->panel8->Location = System::Drawing::Point(792, 29);
 			this->panel8->Name = L"panel8";
-			this->panel8->Size = System::Drawing::Size(94, 114);
-			this->panel8->TabIndex = 36;
+			this->panel8->Size = System::Drawing::Size(525, 209);
+			this->panel8->TabIndex = 60;
 			// 
 			// productPriceLabel
 			// 
@@ -597,7 +1073,7 @@ namespace inventoryManagementSystem {
 			this->productPriceLabel->Name = L"productPriceLabel";
 			this->productPriceLabel->Size = System::Drawing::Size(243, 22);
 			this->productPriceLabel->TabIndex = 11;
-			this->productPriceLabel->Text = L"productPriceLabel";
+			this->productPriceLabel->Text = L"-";
 			this->productPriceLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// productCategoryLabel
@@ -611,7 +1087,7 @@ namespace inventoryManagementSystem {
 			this->productCategoryLabel->Name = L"productCategoryLabel";
 			this->productCategoryLabel->Size = System::Drawing::Size(243, 22);
 			this->productCategoryLabel->TabIndex = 10;
-			this->productCategoryLabel->Text = L"productCategoryLabel";
+			this->productCategoryLabel->Text = L"-";
 			this->productCategoryLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// label19
@@ -638,7 +1114,7 @@ namespace inventoryManagementSystem {
 			this->reviewName3->Name = L"reviewName3";
 			this->reviewName3->Size = System::Drawing::Size(130, 30);
 			this->reviewName3->TabIndex = 8;
-			this->reviewName3->Text = L"Cathelyn Ray";
+			this->reviewName3->Text = L"Carlsen Sam";
 			this->reviewName3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// reviewName2
@@ -652,7 +1128,7 @@ namespace inventoryManagementSystem {
 			this->reviewName2->Name = L"reviewName2";
 			this->reviewName2->Size = System::Drawing::Size(130, 30);
 			this->reviewName2->TabIndex = 7;
-			this->reviewName2->Text = L"Cathelyn Ray";
+			this->reviewName2->Text = L"John Hanson";
 			this->reviewName2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// reviewName1
@@ -680,7 +1156,7 @@ namespace inventoryManagementSystem {
 			this->productNameLabel->Name = L"productNameLabel";
 			this->productNameLabel->Size = System::Drawing::Size(243, 22);
 			this->productNameLabel->TabIndex = 5;
-			this->productNameLabel->Text = L"productNameLabel";
+			this->productNameLabel->Text = L"-";
 			this->productNameLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// button23
@@ -745,60 +1221,6 @@ namespace inventoryManagementSystem {
 			this->reviewLabel1->TabIndex = 0;
 			this->reviewLabel1->Text = L"Great product, exactly what I needed!";
 			// 
-			// rating0
-			// 
-			this->rating0->BackColor = System::Drawing::Color::Transparent;
-			this->rating0->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"rating0.Image")));
-			this->rating0->Location = System::Drawing::Point(1292, 105);
-			this->rating0->Name = L"rating0";
-			this->rating0->Size = System::Drawing::Size(144, 31);
-			this->rating0->TabIndex = 39;
-			this->rating0->TabStop = false;
-			// 
-			// panel1
-			// 
-			this->panel1->BackColor = System::Drawing::Color::White;
-			this->panel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel1.BackgroundImage")));
-			this->panel1->Controls->Add(this->delIcon);
-			this->panel1->Controls->Add(this->copyIcon);
-			this->panel1->Controls->Add(this->editIcon);
-			this->panel1->Controls->Add(this->panel10);
-			this->panel1->Controls->Add(this->buttonDelete);
-			this->panel1->Controls->Add(this->buttonDownload);
-			this->panel1->Controls->Add(this->buttonPreview);
-			this->panel1->Controls->Add(this->panel9);
-			this->panel1->Controls->Add(this->rating5);
-			this->panel1->Controls->Add(this->rating45);
-			this->panel1->Controls->Add(this->rating4);
-			this->panel1->Controls->Add(this->rating35);
-			this->panel1->Controls->Add(this->rating3);
-			this->panel1->Controls->Add(this->rating25);
-			this->panel1->Controls->Add(this->rating2);
-			this->panel1->Controls->Add(this->rating15);
-			this->panel1->Controls->Add(this->rating1);
-			this->panel1->Controls->Add(this->rating05);
-			this->panel1->Controls->Add(this->rating0);
-			this->panel1->Controls->Add(this->panel8);
-			this->panel1->Controls->Add(this->panel5);
-			this->panel1->Controls->Add(this->employeeBackgroundUI);
-			this->panel1->Controls->Add(this->demotionUI);
-			this->panel1->Controls->Add(this->employeeTrashUI);
-			this->panel1->Controls->Add(this->promotionUI);
-			this->panel1->Controls->Add(this->adminTrashUI);
-			this->panel1->Controls->Add(this->addMemberUI);
-			this->panel1->Controls->Add(this->adminBackgroundUI);
-			this->panel1->Controls->Add(this->panel6);
-			this->panel1->Controls->Add(this->toggleOff);
-			this->panel1->Controls->Add(this->toggleOn);
-			this->panel1->Controls->Add(this->panel4);
-			this->panel1->Controls->Add(this->panel3);
-			this->panel1->Controls->Add(this->label1);
-			this->panel1->Controls->Add(this->panel2);
-			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1286, 752);
-			this->panel1->TabIndex = 0;
-			// 
 			// delIcon
 			// 
 			this->delIcon->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"delIcon.Image")));
@@ -825,153 +1247,6 @@ namespace inventoryManagementSystem {
 			this->editIcon->Size = System::Drawing::Size(31, 30);
 			this->editIcon->TabIndex = 57;
 			this->editIcon->TabStop = false;
-			// 
-			// panel10
-			// 
-			this->panel10->AutoScroll = true;
-			this->panel10->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel10.BackgroundImage")));
-			this->panel10->Controls->Add(this->textBox8);
-			this->panel10->Controls->Add(this->panel11);
-			this->panel10->Controls->Add(this->comboBoxFilter);
-			this->panel10->Controls->Add(this->buttonAddProduct);
-			this->panel10->Location = System::Drawing::Point(982, 241);
-			this->panel10->Name = L"panel10";
-			this->panel10->Size = System::Drawing::Size(267, 126);
-			this->panel10->TabIndex = 56;
-			// 
-			// textBox8
-			// 
-			this->textBox8->BackColor = System::Drawing::Color::White;
-			this->textBox8->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox8->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox8->ForeColor = System::Drawing::Color::White;
-			this->textBox8->Location = System::Drawing::Point(75, 227);
-			this->textBox8->Name = L"textBox8";
-			this->textBox8->Size = System::Drawing::Size(219, 20);
-			this->textBox8->TabIndex = 11;
-			// 
-			// panel11
-			// 
-			this->panel11->BackColor = System::Drawing::Color::Black;
-			this->panel11->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel11.BackgroundImage")));
-			this->panel11->Controls->Add(this->confirmProduct);
-			this->panel11->Controls->Add(this->textBox7);
-			this->panel11->Controls->Add(this->textBox6);
-			this->panel11->Controls->Add(this->textBox5);
-			this->panel11->Controls->Add(this->textBox4);
-			this->panel11->Controls->Add(this->textBox3);
-			this->panel11->Location = System::Drawing::Point(290, 60);
-			this->panel11->Name = L"panel11";
-			this->panel11->Size = System::Drawing::Size(549, 654);
-			this->panel11->TabIndex = 3;
-			// 
-			// confirmProduct
-			// 
-			this->confirmProduct->BackColor = System::Drawing::Color::Transparent;
-			this->confirmProduct->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->confirmProduct->FlatAppearance->BorderSize = 0;
-			this->confirmProduct->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->confirmProduct->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->confirmProduct->Location = System::Drawing::Point(185, 568);
-			this->confirmProduct->Name = L"confirmProduct";
-			this->confirmProduct->Size = System::Drawing::Size(164, 41);
-			this->confirmProduct->TabIndex = 9;
-			this->confirmProduct->UseVisualStyleBackColor = false;
-			this->confirmProduct->Click += gcnew System::EventHandler(this, &DashboardForm1::confirmAddProduct_Click);
-			// 
-			// textBox7
-			// 
-			this->textBox7->BackColor = System::Drawing::Color::Black;
-			this->textBox7->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox7->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox7->ForeColor = System::Drawing::Color::White;
-			this->textBox7->Location = System::Drawing::Point(140, 485);
-			this->textBox7->Name = L"textBox7";
-			this->textBox7->Size = System::Drawing::Size(250, 20);
-			this->textBox7->TabIndex = 8;
-			this->textBox7->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &DashboardForm1::textBox_KeyPress_IntegersOnly);
-			// 
-			// textBox6
-			// 
-			this->textBox6->BackColor = System::Drawing::Color::Black;
-			this->textBox6->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox6->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox6->ForeColor = System::Drawing::Color::White;
-			this->textBox6->Location = System::Drawing::Point(140, 416);
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(250, 20);
-			this->textBox6->TabIndex = 7;
-			this->textBox6->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &DashboardForm1::textBox_KeyPress_IntegersOnly);
-			// 
-			// textBox5
-			// 
-			this->textBox5->BackColor = System::Drawing::Color::Black;
-			this->textBox5->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox5->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox5->ForeColor = System::Drawing::Color::White;
-			this->textBox5->Location = System::Drawing::Point(140, 347);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(250, 20);
-			this->textBox5->TabIndex = 6;
-			this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &DashboardForm1::textBox_KeyPress_TextOnly);
-			// 
-			// textBox4
-			// 
-			this->textBox4->BackColor = System::Drawing::Color::Black;
-			this->textBox4->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox4->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox4->ForeColor = System::Drawing::Color::White;
-			this->textBox4->Location = System::Drawing::Point(140, 284);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(250, 20);
-			this->textBox4->TabIndex = 5;
-			this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &DashboardForm1::textBox_KeyPress_Decimals);
-			// 
-			// textBox3
-			// 
-			this->textBox3->BackColor = System::Drawing::Color::Black;
-			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Poppins", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox3->ForeColor = System::Drawing::Color::White;
-			this->textBox3->Location = System::Drawing::Point(141, 214);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(250, 20);
-			this->textBox3->TabIndex = 4;
-			this->textBox3->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &DashboardForm1::textBox_KeyPress_TextOnly);
-			// 
-			// comboBoxFilter
-			// 
-			this->comboBoxFilter->BackColor = System::Drawing::Color::White;
-			this->comboBoxFilter->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->comboBoxFilter->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->comboBoxFilter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->comboBoxFilter->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->comboBoxFilter->FormattingEnabled = true;
-			this->comboBoxFilter->Location = System::Drawing::Point(690, 222);
-			this->comboBoxFilter->Name = L"comboBoxFilter";
-			this->comboBoxFilter->Size = System::Drawing::Size(119, 27);
-			this->comboBoxFilter->TabIndex = 2;
-			// 
-			// buttonAddProduct
-			// 
-			this->buttonAddProduct->BackColor = System::Drawing::Color::Transparent;
-			this->buttonAddProduct->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->buttonAddProduct->FlatAppearance->BorderSize = 0;
-			this->buttonAddProduct->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->buttonAddProduct->Location = System::Drawing::Point(831, 220);
-			this->buttonAddProduct->Name = L"buttonAddProduct";
-			this->buttonAddProduct->Size = System::Drawing::Size(136, 32);
-			this->buttonAddProduct->TabIndex = 1;
-			this->buttonAddProduct->UseVisualStyleBackColor = false;
-			this->buttonAddProduct->Click += gcnew System::EventHandler(this, &DashboardForm1::buttonAddProduct_Click);
 			// 
 			// buttonDelete
 			// 
@@ -1322,126 +1597,6 @@ namespace inventoryManagementSystem {
 			this->button10->UseVisualStyleBackColor = false;
 			this->button10->Click += gcnew System::EventHandler(this, &DashboardForm1::button10_Click);
 			// 
-			// panel3
-			// 
-			this->panel3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel3.BackgroundImage")));
-			this->panel3->Controls->Add(this->label9);
-			this->panel3->Controls->Add(this->label8);
-			this->panel3->Controls->Add(this->label7);
-			this->panel3->Controls->Add(this->label6);
-			this->panel3->Controls->Add(this->label5);
-			this->panel3->Controls->Add(this->label4);
-			this->panel3->Controls->Add(this->label3);
-			this->panel3->Controls->Add(this->label2);
-			this->panel3->Location = System::Drawing::Point(334, 413);
-			this->panel3->Name = L"panel3";
-			this->panel3->Size = System::Drawing::Size(65, 93);
-			this->panel3->TabIndex = 4;
-			// 
-			// label9
-			// 
-			this->label9->AutoSize = true;
-			this->label9->BackColor = System::Drawing::Color::Transparent;
-			this->label9->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label9->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
-			this->label9->ForeColor = System::Drawing::Color::White;
-			this->label9->Location = System::Drawing::Point(951, 145);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(21, 10);
-			this->label9->TabIndex = 7;
-			this->label9->Text = L"20%";
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->BackColor = System::Drawing::Color::Transparent;
-			this->label8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label8->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
-			this->label8->ForeColor = System::Drawing::Color::White;
-			this->label8->Location = System::Drawing::Point(621, 145);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(21, 10);
-			this->label8->TabIndex = 6;
-			this->label8->Text = L"20%";
-			// 
-			// label7
-			// 
-			this->label7->AutoSize = true;
-			this->label7->BackColor = System::Drawing::Color::Transparent;
-			this->label7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label7->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 4, System::Drawing::FontStyle::Bold));
-			this->label7->ForeColor = System::Drawing::Color::White;
-			this->label7->Location = System::Drawing::Point(269, 145);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(21, 10);
-			this->label7->TabIndex = 5;
-			this->label7->Text = L"20%";
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->BackColor = System::Drawing::Color::Transparent;
-			this->label6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label6->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 5.5F, System::Drawing::FontStyle::Bold));
-			this->label6->ForeColor = System::Drawing::Color::White;
-			this->label6->Location = System::Drawing::Point(574, 413);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(41, 14);
-			this->label6->TabIndex = 4;
-			this->label6->Text = L"Total";
-			// 
-			// label5
-			// 
-			this->label5->BackColor = System::Drawing::Color::Transparent;
-			this->label5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label5->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 14.2F, System::Drawing::FontStyle::Bold));
-			this->label5->ForeColor = System::Drawing::Color::Black;
-			this->label5->Location = System::Drawing::Point(398, 402);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(170, 34);
-			this->label5->TabIndex = 3;
-			this->label5->Text = L"100,000,00";
-			this->label5->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// label4
-			// 
-			this->label4->BackColor = System::Drawing::Color::Transparent;
-			this->label4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label4->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 14.2F, System::Drawing::FontStyle::Bold));
-			this->label4->ForeColor = System::Drawing::Color::White;
-			this->label4->Location = System::Drawing::Point(822, 208);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(161, 34);
-			this->label4->TabIndex = 2;
-			this->label4->Text = L"100,000,000";
-			this->label4->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// label3
-			// 
-			this->label3->BackColor = System::Drawing::Color::Transparent;
-			this->label3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label3->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 14.2F, System::Drawing::FontStyle::Bold));
-			this->label3->ForeColor = System::Drawing::Color::White;
-			this->label3->Location = System::Drawing::Point(479, 206);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(171, 40);
-			this->label3->TabIndex = 1;
-			this->label3->Text = L"100,000,000";
-			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// label2
-			// 
-			this->label2->BackColor = System::Drawing::Color::Transparent;
-			this->label2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 16.2F, System::Drawing::FontStyle::Bold));
-			this->label2->ForeColor = System::Drawing::Color::White;
-			this->label2->Location = System::Drawing::Point(99, 203);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(206, 39);
-			this->label2->TabIndex = 0;
-			this->label2->Text = L"100,000,000";
-			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
 			// label1
 			// 
 			this->label1->BackColor = System::Drawing::Color::Transparent;
@@ -1467,7 +1622,6 @@ namespace inventoryManagementSystem {
 			this->panel2->Controls->Add(this->button5);
 			this->panel2->Controls->Add(this->button3);
 			this->panel2->Controls->Add(this->button4);
-			this->panel2->Controls->Add(this->button2);
 			this->panel2->Controls->Add(this->button1);
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Left;
 			this->panel2->Location = System::Drawing::Point(0, 0);
@@ -1562,7 +1716,7 @@ namespace inventoryManagementSystem {
 			this->button5->ForeColor = System::Drawing::Color::White;
 			this->button5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.Image")));
 			this->button5->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->button5->Location = System::Drawing::Point(0, 309);
+			this->button5->Location = System::Drawing::Point(0, 262);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(257, 32);
 			this->button5->TabIndex = 4;
@@ -1581,7 +1735,7 @@ namespace inventoryManagementSystem {
 			this->button3->ForeColor = System::Drawing::Color::White;
 			this->button3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.Image")));
 			this->button3->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->button3->Location = System::Drawing::Point(0, 221);
+			this->button3->Location = System::Drawing::Point(0, 174);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(257, 32);
 			this->button3->TabIndex = 3;
@@ -1600,33 +1754,13 @@ namespace inventoryManagementSystem {
 			this->button4->ForeColor = System::Drawing::Color::White;
 			this->button4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.Image")));
 			this->button4->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->button4->Location = System::Drawing::Point(0, 265);
+			this->button4->Location = System::Drawing::Point(0, 218);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(257, 32);
 			this->button4->TabIndex = 2;
 			this->button4->Text = L"INVENTORY";
 			this->button4->UseVisualStyleBackColor = false;
 			this->button4->Click += gcnew System::EventHandler(this, &DashboardForm1::button4_Click);
-			// 
-			// button2
-			// 
-			this->button2->BackColor = System::Drawing::Color::Black;
-			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
-			this->button2->Cursor = System::Windows::Forms::Cursors::Cross;
-			this->button2->FlatAppearance->BorderSize = 0;
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Font = (gcnew System::Drawing::Font(L"LEMON MILK", 7.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button2->ForeColor = System::Drawing::Color::White;
-			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			this->button2->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->button2->Location = System::Drawing::Point(0, 177);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(257, 32);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"Analytics";
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &DashboardForm1::button2_Click);
 			// 
 			// button1
 			// 
@@ -1661,24 +1795,26 @@ namespace inventoryManagementSystem {
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Stock Sense Dashboard";
 			this->Load += gcnew System::EventHandler(this, &DashboardForm1::DashboardForm1_Load);
-			this->panel6->ResumeLayout(false);
-			this->panel6->PerformLayout();
-			this->panel7->ResumeLayout(false);
-			this->panel7->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->adminBackgroundUI))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addMemberUI))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->employeeBackgroundUI))->EndInit();
 			this->panel5->ResumeLayout(false);
-			this->panel8->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->rating0))->EndInit();
 			this->panel1->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->delIcon))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->copyIcon))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->editIcon))->EndInit();
+			this->panel3->ResumeLayout(false);
+			this->panel3->PerformLayout();
 			this->panel10->ResumeLayout(false);
 			this->panel10->PerformLayout();
 			this->panel11->ResumeLayout(false);
 			this->panel11->PerformLayout();
+			this->panel6->ResumeLayout(false);
+			this->panel6->PerformLayout();
+			this->panel7->ResumeLayout(false);
+			this->panel7->PerformLayout();
+			this->panel8->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->delIcon))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->copyIcon))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->editIcon))->EndInit();
 			this->panel9->ResumeLayout(false);
 			this->panel9->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->fileBoxBackground))->EndInit();
@@ -1695,8 +1831,6 @@ namespace inventoryManagementSystem {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->toggleOff))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->toggleOn))->EndInit();
 			this->panel4->ResumeLayout(false);
-			this->panel3->ResumeLayout(false);
-			this->panel3->PerformLayout();
 			this->panel2->ResumeLayout(false);
 			this->ResumeLayout(false);
 
@@ -1704,7 +1838,7 @@ namespace inventoryManagementSystem {
 #pragma endregion
 private:
 	int currentProductIndex = 0; // Track which product is showing
-
+	int productRowCount = 0;
 	String^ email = "talhasbzzz@gmail.com";
 	bool toggle15 = false;
 	bool toggle16 = false;
@@ -1714,8 +1848,9 @@ private:
 
 		
 	private: System::Void DashboardForm1_Load(System::Object^ sender, System::EventArgs^ e) {
+
+		MessageBox::Show("DashboardForm1_Load");	
 		// Placeholder for form load logic
-		label1->Text = "TALHA"; // switch this equal to username entered in MyFrom
 		label1->Left = ((this->ClientSize.Width - label1->Width) / 2) + panel2->Width / 3;
 		button10->FlatAppearance->MouseOverBackColor = button10->BackColor;
 		button10->FlatAppearance->MouseDownBackColor = button10->BackColor;
@@ -1741,15 +1876,17 @@ private:
 		button13->FlatAppearance->MouseDownBackColor = button13->BackColor;
 		button14->FlatAppearance->MouseOverBackColor = button14->BackColor;
 		button14->FlatAppearance->MouseDownBackColor = button14->BackColor;
-		
+
 		confirmProduct->FlatAppearance->MouseOverBackColor = confirmProduct->BackColor;
 		confirmProduct->FlatAppearance->MouseDownBackColor = confirmProduct->BackColor;
 
 		buttonAddProduct->FlatAppearance->MouseOverBackColor = buttonAddProduct->BackColor;
 		buttonAddProduct->FlatAppearance->MouseDownBackColor = buttonAddProduct->BackColor;
+
+		button21->FlatAppearance->MouseOverBackColor = button21->BackColor;
+		button21->FlatAppearance->MouseDownBackColor = button21->BackColor;
 		panel7->Visible = false; // Initially hide the add user panel 
 		panel11->Visible = false; // Initially hide the add product panel
-
 
 		panel3->Visible = false;
 		panel4->Visible = false;
@@ -1758,20 +1895,17 @@ private:
 		panel8->Visible = false;
 		panel9->Visible = false;
 		panel10->Visible = false;
-		// Add dummy reviews to test
 
-		sampleInventory = new Inventory();
-
-		sampleInventory->addProduct(1, "Apple iPhone 14", "Smartphones", 999.99, 50);
-		sampleInventory->getProducts()[0]->addReview(Review("Talha", 5, "Great product!", time(0)));
-		sampleInventory->getProducts()[0]->addReview(Review("Ali", 4, "Smooth performance!", time(0)));
-
-		sampleInventory->addProduct(2, "Samsung Galaxy S23", "Smartphones", 899.99, 30);
-		sampleInventory->getProducts()[1]->addReview(Review("Sara", 3, "Battery life could be better", time(0)));
-
-		sampleInventory->addProduct(3, "Sony WH-1000XM4", "Headphones", 299.99, 20);
-		sampleInventory->getProducts()[2]->addReview(Review("Zoya", 5, "Best noise cancelling ever!", time(0)));
-
+		graphPanel1->Visible = false;
+		graphPanel2->Visible = false;
+		graphPanel3->Visible = false;
+		graphPanel4->Visible = false;
+		graphPanel5->Visible = false;
+		prodLabel1->Visible = false;
+		prodLabel2->Visible = false;
+		prodLabel3->Visible = false;
+		prodLabel4->Visible = false;
+		prodLabel5->Visible = false;
 
 		button22->FlatAppearance->MouseOverBackColor = Color::Transparent;
 		button22->FlatAppearance->MouseDownBackColor = Color::Transparent;
@@ -1789,7 +1923,6 @@ private:
 
 		// For inventory panel
 		comboBoxFilter->Items->Clear();
-		// Add filterable column options
 		comboBoxFilter->Items->Add("ID");
 		comboBoxFilter->Items->Add("Product");
 		comboBoxFilter->Items->Add("Price");
@@ -1798,9 +1931,287 @@ private:
 		comboBoxFilter->Items->Add("Sales");
 		comboBoxFilter->Items->Add("Action");
 
-		// Optional: Set default selection
 		comboBoxFilter->SelectedIndex = 0;
+
+
+
+		// Load users with proper exception handling
+		try {
+			LoadUsersIntoUI();
+		}
+		catch (std::exception& ex) {
+			MessageBox::Show(gcnew String(ex.what()), "LoadUsersIntoUI Error");
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("LoadUsersIntoUI() crashed: " + ex->Message, "Error");
+		}
+
+		// Load products with proper exception handling
+		try {
+			loadProductsIntoUI();
+		}
+		catch (std::exception& ex) {
+			MessageBox::Show(gcnew String(ex.what()), "loadProductsIntoUI Error");
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("loadProductsIntoUI() crashed: " + ex->Message, "Error");
+		}
+
+		Product** products = currentCompany->getInventory()->getProducts();
+		int count = currentCompany->getInventory()->getProductCount();
+
+		if (currentCompany->getInventory()->getProductCount() == 0) {
+			// Ensure at least an empty file is created with headers
+			currentCompany->saveProductsToFile();
+		}
+
+		if (count >= 1 && products[0]->getReviewCount() == 0) {
+			// Add dummy reviews to first product
+			products[0]->addReview(Review("Ali", 5, "Great build quality!", time(0)));
+			products[0]->addReview(Review("Sana", 4, "Nice and smooth.", time(0)));
+			products[0]->addReview(Review("Zara", 3, "Average performance.", time(0)));
+			products[0]->addReview(Review("Omar", 2, "Not worth the price.", time(0)));
+
+			currentCompany->saveProductsToFile();
+		}
+
+		if (currentCompany == nullptr) {
+			MessageBox::Show("Company is missing!");
+			return;
+		}
+		if (currentCompany->getCurrentUser() == nullptr) {
+			label1->Text = "No User Logged In";
+		}
+
+
+		if (currentCompany != nullptr && currentCompany->getCurrentUser() != nullptr) {
+			string username = currentCompany->getCurrentUser()->getUsername();
+			label1->Text = gcnew String(username.c_str());
+		}
+		else {
+			label1->Text = "No user logged in";
+		}
+
+		showTopSellingProducts();
 	}
+
+	void loadProductsIntoUI() {
+		if (currentCompany == nullptr || currentCompany->getInventory() == nullptr) {
+			MessageBox::Show("Company or inventory is missing!");
+			return;
+		}
+
+		currentCompany->loadProductsFromFile();
+		Product** products = currentCompany->getInventory()->getProducts();
+		int count = currentCompany->getInventory()->getProductCount();
+
+		productRowCount = 0;
+		for (int i = 0; i < count; i++) {
+			if (products[i] == nullptr || products[i]->getName() == nullptr) {
+				continue; // Skip invalid products
+			}
+			AddProductRow(productRowCount++, products[i]);
+		}
+	}
+
+	void LoadUsersIntoUI()
+	{
+		if (currentCompany == nullptr || currentCompany->getDirectory() == nullptr) {
+			MessageBox::Show("Company or directory is missing!");
+			return;
+		}
+
+		currentCompany->loadUsersFromFile();
+		Users** arr = currentCompany->getDirectory()->users;
+		int count = currentCompany->getDirectory()->userCount;
+
+		int posX = 61;
+		int posY = cardStartY;
+
+		memberCount = 0;
+
+		for (int i = 0; i < count; i++) {
+			if (arr[i] == nullptr) continue;
+
+			string role = arr[i]->getRole();
+			string username = arr[i]->getUsername();
+			string email = arr[i]->getemail();
+
+			if (role == "Owner") {
+				label15->Text = gcnew String(username.c_str()); // Owner label
+				label14->Text = gcnew String(email.c_str()); // Owner email
+				continue;
+			}
+
+			// Setup for other roles: Admin or Employee
+			bool isAdmin = (role == "Admin");
+
+			PictureBox^ newCard = gcnew PictureBox();
+			newCard->Name = isAdmin ? "adminCard_" + (memberCount + 1).ToString() : "memberCard_" + (memberCount + 1).ToString();
+			newCard->Image = isAdmin ? adminBackgroundUI->Image : employeeBackgroundUI->Image;
+			newCard->Size = isAdmin ? adminBackgroundUI->Size : employeeBackgroundUI->Size;
+			newCard->SizeMode = PictureBoxSizeMode::Normal;
+			newCard->BackColor = Color::Transparent;
+			newCard->Location = Point(posX, posY);
+			newCard->Visible = true;
+			panel6->Controls->Add(newCard);
+
+			// Name label
+			Label^ nameLabel = gcnew Label();
+			nameLabel->Name = "nameLabel_" + (memberCount + 1).ToString();
+			nameLabel->Text = gcnew String(username.c_str());
+			nameLabel->Font = gcnew System::Drawing::Font("Poppins SemiBold", 7.8F, FontStyle::Bold);
+			nameLabel->ForeColor = isAdmin ? Color::Black : Color::White;
+			nameLabel->TextAlign = ContentAlignment::MiddleCenter;
+			nameLabel->AutoSize = true;
+			nameLabel->Location = Point(79, 14);
+			nameLabel->BackColor = Color::Transparent;
+			nameLabel->Parent = newCard;
+			newCard->Controls->Add(nameLabel);
+
+			// Email label
+			Label^ emailLabel = gcnew Label();
+			emailLabel->Name = "emailLabel_" + (memberCount + 1).ToString();
+			emailLabel->Text = gcnew String(email.c_str());
+			emailLabel->Font = gcnew System::Drawing::Font("Poppins SemiBold", 7.8F, FontStyle::Bold);
+			emailLabel->ForeColor = isAdmin ? Color::Black : Color::White;
+			emailLabel->TextAlign = ContentAlignment::MiddleCenter;
+			emailLabel->AutoSize = true;
+			emailLabel->Location = Point(243, 14);
+			emailLabel->BackColor = Color::Transparent;
+			emailLabel->Parent = newCard;
+			newCard->Controls->Add(emailLabel);
+
+			// Role Button
+			Button^ roleBtn = gcnew Button();
+			roleBtn->Name = "roleBtn_" + (memberCount + 1).ToString();
+			roleBtn->BackgroundImage = isAdmin ? demotionUI->BackgroundImage : promotionUI->BackgroundImage;
+			roleBtn->Size = isAdmin ? demotionUI->Size : promotionUI->Size;
+			roleBtn->BackColor = isAdmin ? demotionUI->BackColor : promotionUI->BackColor;
+			roleBtn->FlatStyle = FlatStyle::Flat;
+			roleBtn->FlatAppearance->BorderSize = 0;
+			roleBtn->FlatAppearance->MouseDownBackColor = isAdmin ? Color::FromArgb(174, 4, 4) : Color::Black;
+			roleBtn->FlatAppearance->MouseOverBackColor = isAdmin ? Color::FromArgb(174, 4, 4) : Color::Black;
+			roleBtn->Location = Point(728, 10);
+			roleBtn->Visible = true;
+			roleBtn->Click += gcnew System::EventHandler(this, &DashboardForm1::RoleButton_Click);
+			roleBtn->Cursor = Cursors::Hand;
+			roleBtn->Parent = newCard;
+			newCard->Controls->Add(roleBtn);
+
+			// Trash Button
+			Button^ trashBtn = gcnew Button();
+			trashBtn->Name = "trashBtn_" + (memberCount + 1).ToString();
+			trashBtn->BackgroundImage = isAdmin ? adminTrashUI->BackgroundImage : employeeTrashUI->BackgroundImage;
+			trashBtn->Size = isAdmin ? adminTrashUI->Size : employeeTrashUI->Size;
+			trashBtn->BackColor = isAdmin ? adminTrashUI->BackColor : employeeTrashUI->BackColor;
+			trashBtn->FlatStyle = FlatStyle::Flat;
+			trashBtn->FlatAppearance->BorderSize = 0;
+			trashBtn->FlatAppearance->MouseDownBackColor = isAdmin ? Color::FromArgb(174, 4, 4) : Color::Black;
+			trashBtn->FlatAppearance->MouseOverBackColor = isAdmin ? Color::FromArgb(174, 4, 4) : Color::Black;
+			trashBtn->Location = isAdmin ? Point(787, 9) : Point(789, 10);
+			trashBtn->Visible = true;
+			trashBtn->Click += gcnew System::EventHandler(this, &DashboardForm1::TrashButton_Click);
+			trashBtn->Cursor = Cursors::Hand;
+			trashBtn->Parent = newCard;
+			newCard->Controls->Add(trashBtn);
+
+			// Final adjustments
+			memberCount++;
+			posY += 60;
+		}
+
+		// Move Add Member button accordingly
+		button20->Location = Point(button20->Location.X, cardStartY + (memberCount * 60));
+		button20->Visible = (memberCount < 5);
+	}
+
+	void showTopSellingProducts() {
+
+		// Some dashboard cod
+		Product** products = currentCompany->getInventory()->getProducts();
+		int count = currentCompany->getInventory()->getProductCount();
+
+		double balance = 0;
+		int totalSales = 0;
+		int totalQuantity = 0;
+
+		for (int i = 0; i < count; i++) {
+			if (!products[i]) continue;
+			balance += products[i]->getPrice() * products[i]->getQuantity();
+			totalSales += products[i]->getTotalSales();
+			totalQuantity += products[i]->getQuantity();
+		}
+
+		// Assign to labels
+		label2->Text = balance.ToString("N0");      // e.g., $100,000
+		label3->Text = totalSales.ToString("N0");           // e.g., 100,000
+		label4->Text = totalQuantity.ToString("N0");       // e.g., 100,000
+
+
+		const int MAX = 5;
+		int topIndices[MAX] = { -1, -1, -1, -1, -1 };
+		double topRevenues[MAX] = { -1, -1, -1, -1, -1 };
+
+		// Step 1: Find top 5 revenue products
+		for (int i = 0; i < count; ++i) {
+			if (!products[i]) continue;
+
+			double revenue = products[i]->getPrice() * products[i]->getTotalSales();
+
+			// Insert in sorted position
+			for (int j = 0; j < MAX; j++) {
+				if (revenue > topRevenues[j]) {
+					// Shift down
+					for (int k = MAX - 1; k > j; --k) {
+						topRevenues[k] = topRevenues[k - 1];
+						topIndices[k] = topIndices[k - 1];
+					}
+					topRevenues[j] = revenue;
+					topIndices[j] = i;
+					break;
+				}
+			}
+		}
+
+		// Get max revenue for normalization
+		double maxRevenue = topRevenues[0] > 0 ? topRevenues[0] : 1;
+		double totalTopRevenue = 0;
+
+		// Pre-declared arrays
+		cli::array<Panel^>^ graphPanels = gcnew cli::array<Panel^>(5) { graphPanel1, graphPanel2, graphPanel3, graphPanel4, graphPanel5 };
+		cli::array<Label^>^ prodLabels = gcnew cli::array<Label^>(5) { prodLabel1, prodLabel2, prodLabel3, prodLabel4, prodLabel5 };
+
+		// Step 2: Render panels and labels
+		for (int i = 0; i < MAX; i++) {
+			if (topIndices[i] != -1) {
+				Product* p = products[topIndices[i]];
+				double revenue = topRevenues[i];
+				totalTopRevenue += revenue;
+
+				int baseY = 645; // Y where the bar should *end*
+				double logRev = log10(revenue + 1);
+				double logMax = log10(maxRevenue + 1);
+				int height = (int)((logRev / logMax) * 174.0);
+				if (height < 5) height = 5;
+
+				graphPanels[i]->Height = height;
+				graphPanels[i]->Top = baseY - height;  // Shift upward instead of downward
+				graphPanels[i]->Visible = true;
+
+				prodLabels[i]->Text = gcnew String(p->getName());
+				prodLabels[i]->Visible = true;
+			}
+			else {
+				graphPanels[i]->Visible = false;
+				prodLabels[i]->Visible = false;
+			}
+		}
+
+		label5->Text = totalTopRevenue.ToString("N0");
+	}
+
+
 
 	// KeyPress handler for text boxes to only take numeric inputs
 	private: System::Void textBox_KeyPress_IntegersOnly(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
@@ -1835,11 +2246,13 @@ private:
 
 	// Function to update the labels
 	void updateProductDisplay() {
-		if (!sampleInventory || sampleInventory->getProductCount() == 0) return;
+		if (!currentCompany || !currentCompany->getInventory() || currentCompany->getInventory()->getProductCount() == 0)
+			return;
 
-		Product** products = sampleInventory->getProducts();
-		if (currentProductIndex >= sampleInventory->getProductCount())
-			currentProductIndex = 0; // Safety
+		Product** products = currentCompany->getInventory()->getProducts();
+
+		if (currentProductIndex >= currentCompany->getInventory()->getProductCount())
+			currentProductIndex = 0;
 
 		Product* prod = products[currentProductIndex];
 		if (prod) {
@@ -1850,7 +2263,6 @@ private:
 			productPriceLabel->Text = priceText;
 		}
 	}
-
 
 	// This is specifically to toggle buttons (I use toggleSwitch(buttonName) in the button click events))
 	void ToggleSwitch(Button^ btn, bool% toggleFlag)
@@ -1927,9 +2339,6 @@ private:
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		SetActiveButton(button1);
 		TogglePanel(panel3);
-	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		SetActiveButton(button2);
 	}
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 		SetActiveButton(button3);
@@ -2016,8 +2425,6 @@ private:
 
 	int memberCount = 0; // Starts with 0 since owner does not count
 	int cardStartY = 316;
-	String^ newUsername;
-	String^ newEmail;
 
 	// This is the button to add a new member
 	private: System::Void button20_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -2026,17 +2433,36 @@ private:
 			return;
 		}
 
-		// Just show the add user panel (pop-up UI)
+		Users* user = currentCompany->getCurrentUser();
+		if (user == nullptr) {
+			MessageBox::Show("No user is currently logged in.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		if (user->getRole() != "Owner") {
+			MessageBox::Show("Only the Owner can add new users.", "Access Denied", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
 		panel7->BringToFront();
 		panel7->Visible = true;
 	}
 
-	// This is the logic when the promotion / demotion button is clicked
 	private: System::Void RoleButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		Users* current = currentCompany->getCurrentUser();
+		if (current == nullptr) {
+			MessageBox::Show("No user is currently logged in.", "Fatal Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		string role = current->getRole();
+		if (role != "Owner" && role != "Admin") {
+			MessageBox::Show("Only Owner or Admin can change roles.", "Access Denied", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
 		Button^ clickedRoleBtn = dynamic_cast<Button^>(sender);
 		if (clickedRoleBtn == nullptr) return;
 
-		// Extract index from button name: roleBtn_#
 		String^ name = clickedRoleBtn->Name;
 		int underscoreIndex = name->LastIndexOf('_');
 		if (underscoreIndex == -1 || underscoreIndex == name->Length - 1) return;
@@ -2048,9 +2474,8 @@ private:
 		String^ nameLabelName = "nameLabel_" + index;
 		String^ emailLabelName = "emailLabel_" + index;
 
-		// 🔍 Locate the user card
 		PictureBox^ card = nullptr;
-		for each(Control ^ ctrl in panel6->Controls) {
+		for each (Control ^ ctrl in panel6->Controls) {
 			if (ctrl->Name == memberCardName || ctrl->Name == adminCardName) {
 				card = dynamic_cast<PictureBox^>(ctrl);
 				break;
@@ -2061,9 +2486,8 @@ private:
 			return;
 		}
 
-		// 🔍 Locate the trash button
 		Button^ trashBtn = nullptr;
-		for each(Control ^ ctrl in card->Controls) {
+		for each (Control ^ ctrl in card->Controls) {
 			if (ctrl->Name == trashBtnName) {
 				trashBtn = dynamic_cast<Button^>(ctrl);
 				break;
@@ -2074,14 +2498,18 @@ private:
 			return;
 		}
 
-		// Locate the name and email labels
 		Label^ nameLabel = dynamic_cast<Label^>(card->Controls[nameLabelName]);
 		Label^ emailLabel = dynamic_cast<Label^>(card->Controls[emailLabelName]);
 
-		// Toggle role
+		// Check if the user is modifying their own role
+		string email = marshal_as<string>(emailLabel->Text);
+		if (current->getemail() == email && role == "Admin" && card->Name->StartsWith("adminCard_")) {
+			MessageBox::Show("Admins cannot demote themselves.", "Access Denied", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
 		bool isEmployee = card->Name->StartsWith("memberCard_");
 		if (isEmployee) {
-			// Promote to Admin
 			card->Image = adminBackgroundUI->Image;
 			card->Name = "adminCard_" + index;
 
@@ -2103,7 +2531,6 @@ private:
 			if (emailLabel) emailLabel->ForeColor = Color::Black;
 		}
 		else {
-			// Demote to Employee
 			card->Image = employeeBackgroundUI->Image;
 			card->Name = "memberCard_" + index;
 
@@ -2124,23 +2551,33 @@ private:
 			if (nameLabel) nameLabel->ForeColor = Color::White;
 			if (emailLabel) emailLabel->ForeColor = Color::White;
 		}
+
+		Users* user = currentCompany->getUserByMail(email);
+		if (user != nullptr) {
+			if (isEmployee)
+				user->setRole("Admin");
+			else
+				user->setRole("Employee");
+			currentCompany->saveUsersToFile();
+			cout << "Role updated for user: " << user->getUsername() << endl;
+		}
 	}
 
-	// This is the logic when the trash button is clicked
 	private: System::Void TrashButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		string role = currentCompany->getCurrentUser()->getRole();
+		if (role != "Owner") {
+			MessageBox::Show("Only Owner can delete members.", "Access Denied");
+			return;
+		}
+
 		Button^ clickedTrashBtn = dynamic_cast<Button^>(sender);
 		if (clickedTrashBtn == nullptr) return;
 
-		// Extract index
-		String^ name = clickedTrashBtn->Name; // trashBtn_#
-		int underscoreIndex = name->LastIndexOf('_');
-		if (underscoreIndex == -1 || underscoreIndex == name->Length - 1) return;
+		int index = Convert::ToInt32(clickedTrashBtn->Name->Substring(clickedTrashBtn->Name->LastIndexOf('_') + 1));
 
-		int index = Int32::Parse(name->Substring(underscoreIndex + 1));
-
-		// Locate card (either adminCard_# or memberCard_#)
 		PictureBox^ targetCard = nullptr;
-		for each(Control ^ ctrl in panel6->Controls) {
+		for each (Control ^ ctrl in panel6->Controls) {
 			if ((ctrl->Name == "memberCard_" + index || ctrl->Name == "adminCard_" + index) && dynamic_cast<PictureBox^>(ctrl)) {
 				targetCard = dynamic_cast<PictureBox^>(ctrl);
 				break;
@@ -2148,63 +2585,81 @@ private:
 		}
 
 		if (targetCard == nullptr) {
-			MessageBox::Show("❌ Could not find card for deletion.");
+			MessageBox::Show("Could not find card for deletion.");
 			return;
 		}
 
-		// Remove card and its child controls (roleBtn, trashBtn, labels)
+		// 🔍 Extract email from the email label inside the card
+		String^ emailLabelName = "emailLabel_" + index.ToString();
+		Label^ emailLabel = dynamic_cast<Label^>(targetCard->Controls[emailLabelName]);
+
+		if (emailLabel == nullptr) {
+			MessageBox::Show("Email label not found in card.");
+			return;
+		}
+
+		string emailToDelete = marshal_as<string>(emailLabel->Text);
+
+		// ✅ Delete user from UserManager
+		Users** arr = currentCompany->getDirectory()->users;
+		int& count = currentCompany->getDirectory()->userCount;
+
+		for (int i = 0; i < count; ++i) {
+			if (arr[i] && arr[i]->getemail() == emailToDelete) {
+				// Clear currentUser if it's the one being deleted
+				Users* current = currentCompany->getDirectory()->getCurrentUser();
+				if (current && current->getemail() == emailToDelete) {
+					currentCompany->getDirectory()->logout();
+				}
+
+				delete arr[i];
+				for (int j = i; j < count - 1; ++j)
+					arr[j] = arr[j + 1];
+				arr[count - 1] = nullptr;
+				count--;
+				break;
+			}
+		}
+
+		currentCompany->saveUsersToFile();
+
+		// ✅ Remove from UI
 		panel6->Controls->Remove(targetCard);
 		delete targetCard;
 
-		// Shift other cards above
+		// ✅ Shift cards above down
 		for (int i = index + 1; i <= memberCount; ++i) {
-			String^ oldCardName = "memberCard_" + i;
-			String^ oldAdminCardName = "adminCard_" + i;
-			String^ oldRoleBtnName = "roleBtn_" + i;
-			String^ oldTrashBtnName = "trashBtn_" + i;
-			String^ oldNameLabelName = "nameLabel_" + i;
-			String^ oldEmailLabelName = "emailLabel_" + i;
+			String^ cardName = "memberCard_" + i;
+			String^ adminName = "adminCard_" + i;
 
-			PictureBox^ card = dynamic_cast<PictureBox^>(panel6->Controls[oldCardName]);
+			PictureBox^ card = dynamic_cast<PictureBox^>(panel6->Controls[cardName]);
 			if (card == nullptr)
-				card = dynamic_cast<PictureBox^>(panel6->Controls[oldAdminCardName]);
+				card = dynamic_cast<PictureBox^>(panel6->Controls[adminName]);
 
 			if (card == nullptr) continue;
 
 			// Move card up
 			card->Location = Point(card->Location.X, card->Location.Y - 60);
 
-			// Rename card
+			// Rename card and inner controls
 			bool wasAdmin = card->Name->StartsWith("adminCard_");
 			card->Name = wasAdmin ? "adminCard_" + (i - 1) : "memberCard_" + (i - 1);
 
-			// Shift role and trash buttons inside the card
-			for each(Control ^ c in card->Controls) {
-				if (c->Name == oldRoleBtnName) {
-					c->Name = "roleBtn_" + (i - 1);
-				}
-				else if (c->Name == oldTrashBtnName) {
-					c->Name = "trashBtn_" + (i - 1);
-				}
-				else if (c->Name == oldNameLabelName) {
-					c->Name = "nameLabel_" + (i - 1);
-				}
-				else if (c->Name == oldEmailLabelName) {
-					c->Name = "emailLabel_" + (i - 1);
-				}
+			for each (Control ^ c in card->Controls) {
+				if (c->Name == "roleBtn_" + i) c->Name = "roleBtn_" + (i - 1);
+				if (c->Name == "trashBtn_" + i) c->Name = "trashBtn_" + (i - 1);
+				if (c->Name == "nameLabel_" + i) c->Name = "nameLabel_" + (i - 1);
+				if (c->Name == "emailLabel_" + i) c->Name = "emailLabel_" + (i - 1);
 			}
 		}
 
-		// 🟡 Shift Add Member button up
+		// Update state
+		memberCount--;
+		if (memberCount < 5) button20->Visible = true;
 		button20->Location = Point(button20->Location.X, button20->Location.Y - 60);
 
-		// ✅ Show Add Member button again if needed
-		memberCount--;
-		if (memberCount < 5) {
-			button20->Visible = true;
-		}
+		MessageBox::Show("User deleted successfully.");
 	}
-
 
 
 	// Add user button in the add user panel: Applying logic to move buttons and the employee / admin card to new position after pressing this button
@@ -2213,9 +2668,41 @@ private:
 		panel7->Visible = false;
 
 		// Get user input
-		newUsername = textBox1->Text;
-		newEmail = textBox2->Text;
+		String^ newUsername = textBox1->Text;
+		String^ newEmail = textBox2->Text;
 		bool isAdmin = checkBox1->Checked;
+
+		if (newUsername->Trim() == "" || newEmail->Trim() == "") {
+			MessageBox::Show("Please enter both username and email.", "Missing Data", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		// Convert inputs
+		string sUsername = marshal_as<string>(newUsername);
+		string sEmail = marshal_as<string>(newEmail);
+		string sRole = isAdmin ? "Admin" : "Employee";
+
+		// Check for duplicates (optional but recommended)
+		if (currentCompany->getUserByMail(sEmail) != nullptr) {
+			MessageBox::Show("A user with this email already exists.", "Duplicate User", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		// Create user object
+		Users* newUser = new Users();
+		newUser->username = sUsername;
+		newUser->email = sEmail;
+		newUser->password = ""; // Empty for now, user will set this later
+		newUser->role = sRole;
+
+		// Register and save
+		bool added = currentCompany->registerUser(newUser);
+		if (!added) {
+			MessageBox::Show("Failed to register user.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			delete newUser;
+			return;
+		}
+		currentCompany->saveUsersToFile();
 
 		// Calculate card position
 		int posX = 61;
@@ -2310,17 +2797,12 @@ private:
 		textBox1->Text = "";
 		textBox2->Text = "";
 	}
-	
-
-
 
 	int currentReviewIndex = 0; // Tracks which set of 3 to show
-	private: System::Void label19_Click(System::Object^ sender, System::EventArgs^ e)
-	{
+	private: System::Void label19_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!currentCompany || !currentCompany->getInventory()) return;
 
-		if (!sampleInventory || sampleInventory->getProductCount() == 0) return;
-
-		Product* prod = sampleInventory->getProducts()[currentProductIndex];
+		Product* prod = currentCompany->getInventory()->getProducts()[currentProductIndex];
 		if (!prod || prod->getReviewCount() == 0) return;
 
 		Review* allReviews = prod->getAllReviews();
@@ -2350,62 +2832,83 @@ private:
 		currentReviewIndex += 3;
 		if (currentReviewIndex >= total)
 			currentReviewIndex = 0;
+
+		delete[] allReviews; // clean up if getAllReviews allocates new array
 	}
 
 
 	// The left button, to move to previous product
 	private: System::Void button22_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (!sampleInventory || sampleInventory->getProductCount() == 0) return;
+		if (!currentCompany || !currentCompany->getInventory()) return;
+
+		int count = currentCompany->getInventory()->getProductCount();
+		if (count == 0) return;
 
 		currentProductIndex--;
 		if (currentProductIndex < 0)
-			currentProductIndex = sampleInventory->getProductCount() - 1; // Loop back
+			currentProductIndex = count - 1;
 
 		updateProductDisplay();
-
-		currentReviewIndex = 0; // Reset review index
-		label19_Click(nullptr, nullptr); // Load first 3 reviews
+		currentReviewIndex = 0;
+		label19_Click(nullptr, nullptr);
 	}
 
 	// The right button, to move to next product
 	private: System::Void button23_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (!sampleInventory || sampleInventory->getProductCount() == 0) return;
+		if (!currentCompany || !currentCompany->getInventory()) return;
+
+		int count = currentCompany->getInventory()->getProductCount();
+		if (count == 0) return;
 
 		currentProductIndex++;
-		if (currentProductIndex >= sampleInventory->getProductCount())
-			currentProductIndex = 0; // Loop back
+		if (currentProductIndex >= count)
+			currentProductIndex = 0;
 
 		updateProductDisplay();
-
-		currentReviewIndex = 0; // Reset review index
-		label19_Click(nullptr, nullptr); // Load first 3 reviews
+		currentReviewIndex = 0;
+		label19_Click(nullptr, nullptr);
 	}
+
 
 	// Generate button in reports panel
 
 	private: System::Void previewBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Preview clicked");
+		std::string productPath = currentCompany->getCompanyName() + "Inventory.csv";
+		String^ path = gcnew String(productPath.c_str());
+
+		if (System::IO::File::Exists(path)) {
+			System::Diagnostics::Process::Start("notepad.exe", path);
+		}
+		else {
+			MessageBox::Show("Inventory file does not exist. Please generate it first.", "File Not Found", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 
 	private: System::Void downloadBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Create dummy text content
-		String^ sampleContent = "This is a sample report file.\nGenerated for testing download.";
+		// Ensure latest inventory data is saved to CSV
+		currentCompany->saveProductsToFile();
 
-		// Open SaveFileDialog
-		SaveFileDialog^ saveDialog = gcnew SaveFileDialog();
-		saveDialog->Filter = "Text Files (*.txt)|*.txt";
-		saveDialog->Title = "Download Report";
-		saveDialog->FileName = "Report.txt";
+		// Construct file path
+		std::string productPath = currentCompany->getCompanyName() + "Inventory.csv";
+		String^ sourcePath = gcnew String(productPath.c_str());
 
-		if (saveDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			// Write to file
-			System::IO::StreamWriter^ writer = gcnew System::IO::StreamWriter(saveDialog->FileName);
-			writer->Write(sampleContent);
-			writer->Close();
+		// File Save Dialog
+		SaveFileDialog^ dialog = gcnew SaveFileDialog();
+		dialog->Filter = "CSV Files (*.csv)|*.csv";
+		dialog->Title = "Download Product Inventory";
+		dialog->FileName = gcnew String(productPath.c_str());
 
-			MessageBox::Show("Report downloaded successfully!", "Download", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			try {
+				System::IO::File::Copy(sourcePath, dialog->FileName, true);
+				MessageBox::Show("Inventory file downloaded successfully!", "Download", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error copying file:\n" + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 	}
+
 
 
 	private: System::Void deleteBtn_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -2484,6 +2987,8 @@ private:
 
 
 	private: System::Void buttonGenerate_Click(System::Object^ sender, System::EventArgs^ e) {
+		currentCompany->saveProductsToFile();  // Save the latest snapshot of products to file
+
 		int fileCount = panel9->Controls->Count / 5; // Assuming each set adds 1 picturebox + 3 buttons
 		if (fileCount == 6)
 		{
@@ -2603,12 +3108,13 @@ private:
 		lbl->Location = location;
 		lbl->Size = size;
 		lbl->Text = text;
-		lbl->TextAlign = ContentAlignment::MiddleCenter;
+		lbl->TextAlign = ContentAlignment::MiddleLeft;
 		lbl->Font = gcnew System::Drawing::Font("Poppins", 10.2F);
 		lbl->ForeColor = Color::Black;
 		lbl->BackColor = Color::White;
 		lbl->FlatStyle = FlatStyle::Flat;
 		lbl->BorderStyle = BorderStyle::None;
+		lbl->AutoEllipsis = true;
 		return lbl;
 	}
 
@@ -2626,8 +3132,57 @@ private:
 	}
 
 
+
+	private: System::Void delIcon_Click(System::Object^ sender, System::EventArgs^ e) {
+		PictureBox^ clickedIcon = dynamic_cast<PictureBox^>(sender);
+		if (clickedIcon == nullptr) return;
+
+		// Extract row index from icon name (e.g., "DelIcon_3")
+		String^ name = clickedIcon->Name;
+		if (!name->StartsWith("DelIcon_")) return;
+		int rowIndex = Convert::ToInt32(name->Substring(8)) - 1;
+
+		// Remove product from inventory and update file
+		currentCompany->getInventory()->removeProductAt(rowIndex);
+		currentCompany->saveProductsToFile();
+
+		// Clear only product-related dynamic controls from panel10
+		ArrayList^ toRemove = gcnew ArrayList();
+		for each (Control ^ ctrl in panel10->Controls) {
+			String^ ctrlName = ctrl->Name;
+			if (ctrlName->StartsWith("ID_label_") ||
+				ctrlName->StartsWith("Name_label_") ||
+				ctrlName->StartsWith("Price_label_") ||
+				ctrlName->StartsWith("Category_label_") ||
+				ctrlName->StartsWith("Stock_label_") ||
+				ctrlName->StartsWith("Sales_label_") ||
+				ctrlName->StartsWith("DelIcon_"))
+			{
+				toRemove->Add(ctrl);
+			}
+		}
+
+		for each (Control ^ ctrl in toRemove) {
+			panel10->Controls->Remove(static_cast<Control^>(ctrl));
+			delete ctrl;
+		}
+
+		// Rebuild all product rows from current inventory
+		productRowCount = 0;
+		Product** products = currentCompany->getInventory()->getProducts();
+		int count = currentCompany->getInventory()->getProductCount();
+
+		for (int i = 0; i < count; i++) {
+			AddProductRow(productRowCount++, products[i]);
+		}
+
+		showTopSellingProducts();
+	}
+
+
+
 	void AddProductRow(int rowIndex, Product* product) {
-		int baseY = 239;
+		int baseY = 310;
 		int rowHeight = 30;
 		int y = baseY + rowIndex * rowHeight;
 
@@ -2641,72 +3196,62 @@ private:
 
 		// Add Labels
 		panel10->Controls->Add(CreateInventoryLabel("ID_label_" + (rowIndex + 1), Point(68, y), System::Drawing::Size(51, 30), idStr));
-		panel10->Controls->Add(CreateInventoryLabel("Name_label_" + (rowIndex + 1), Point(174, y), System::Drawing::Size(83, 30), nameStr));
-		panel10->Controls->Add(CreateInventoryLabel("Price_label_" + (rowIndex + 1), Point(355, y), System::Drawing::Size(57, 30), "$" + priceStr));
+		panel10->Controls->Add(CreateInventoryLabel("Name_label_" + (rowIndex + 1), Point(174, y), System::Drawing::Size(130, 30), nameStr));
+		panel10->Controls->Add(CreateInventoryLabel("Price_label_" + (rowIndex + 1), Point(345, y), System::Drawing::Size(110, 30), "$" + priceStr));
 		panel10->Controls->Add(CreateInventoryLabel("Category_label_" + (rowIndex + 1), Point(463, y), System::Drawing::Size(90, 30), categoryStr));
 		panel10->Controls->Add(CreateInventoryLabel("Stock_label_" + (rowIndex + 1), Point(600, y), System::Drawing::Size(62, 30), stockStr));
 		panel10->Controls->Add(CreateInventoryLabel("Sales_label_" + (rowIndex + 1), Point(735, y), System::Drawing::Size(57, 30), salesStr));
 
-		// Add Action Icons
-		panel10->Controls->Add(CreateInventoryIcon("EditIcon_" + (rowIndex + 1), Point(845, y), editIcon->Image, editIcon->Size));
-		panel10->Controls->Add(CreateInventoryIcon("CopyIcon_" + (rowIndex + 1), Point(886, y), copyIcon->Image, copyIcon->Size));
-		panel10->Controls->Add(CreateInventoryIcon("DelIcon_" + (rowIndex + 1), Point(927, y), delIcon->Image, delIcon->Size));
+		// Action icon (Del button only)
+		PictureBox^ icon = CreateInventoryIcon("DelIcon_" + (rowIndex + 1), Point(886, y), delIcon->Image, delIcon->Size);
+		icon->Click += gcnew EventHandler(this, &DashboardForm1::delIcon_Click);
+		panel10->Controls->Add(icon);
 	}
 
 
-	// Confirm Add Product button
 	private: System::Void confirmAddProduct_Click(System::Object^ sender, System::EventArgs^ e) {
-		// 1. Read data from the textboxes
 		String^ nameStr = textBox3->Text;
 		String^ priceStr = textBox4->Text;
 		String^ categoryStr = textBox5->Text;
 		String^ quantityStr = textBox6->Text;
 		String^ salesStr = textBox7->Text;
 
-		// Validate that nothing is empty
 		if (nameStr == "" || priceStr == "" || categoryStr == "" || quantityStr == "" || salesStr == "") {
 			MessageBox::Show("Please fill in all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
-		// Convert managed strings to std::string
 		std::string nameStd = msclr::interop::marshal_as<std::string>(nameStr);
 		std::string categoryStd = msclr::interop::marshal_as<std::string>(categoryStr);
 
-		// Manually copy to native char* arrays
-		char* nameChar = new char[nameStd.length() + 1]; // +1 for null terminator
-		for (size_t i = 0; i < nameStd.length(); i++) {
-			nameChar[i] = nameStd[i]; // Copy each character
-		}
-		nameChar[nameStd.length()] = '\0'; // Null-terminate
+		char* nameChar = new char[nameStd.length() + 1];
+		strcpy(nameChar, nameStd.c_str());
 
-		char* categoryChar = new char[categoryStd.length() + 1]; // +1 for null terminator
-		for (size_t i = 0; i < categoryStd.length(); i++) {
-			categoryChar[i] = categoryStd[i]; // Copy each character
-		}
-		categoryChar[categoryStd.length()] = '\0'; // Null-terminate
+		char* categoryChar = new char[categoryStd.length() + 1];
+		strcpy(categoryChar, categoryStd.c_str());
 
-		// Convert numeric values
 		double price = Convert::ToDouble(priceStr);
 		int quantity = Convert::ToInt32(quantityStr);
 		int totalSales = Convert::ToInt32(salesStr);
 
-		// Generate Product ID (based on inventory count)
-		int newProductID = sampleInventory->getProductCount() + 1;
+		int newProductID = currentCompany->getInventory()->getProductCount() + 1;
 
-		// Add product to inventory
-		sampleInventory->addProduct(newProductID, nameChar, categoryChar, price, quantity);
-		sampleInventory->getProducts()[sampleInventory->getProductCount() - 1]->setTotalSales(totalSales);
+		// Add to currentCompany's inventory
+		currentCompany->addProduct(newProductID, nameChar, categoryChar, price, quantity);
+		Product** products = currentCompany->getInventory()->getProducts();
+		products[currentCompany->getInventory()->getProductCount() - 1]->setTotalSales(totalSales);
 
-		int rowIndex = sampleInventory->getProductCount() - 1;
-		Product* latest = sampleInventory->getProducts()[rowIndex];
-		AddProductRow(rowIndex, latest);
+		// Save to file
+		currentCompany->saveProductsToFile();
+		Product* latest = currentCompany->getInventory()->getProducts()[currentCompany->getInventory()->getProductCount() - 1];
+		AddProductRow(productRowCount++, latest);
 
 		panel11->Hide();
 
-		// Cleaning up
 		delete[] nameChar;
 		delete[] categoryChar;
+
+		showTopSellingProducts();
 	}
 
 };

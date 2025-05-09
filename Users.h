@@ -16,6 +16,7 @@ public:
     string getPassword();
     string getRole();
     string getemail();
+    void setRole(string newRole);
     void setPassword(string newPass);
     virtual void displayInfo();
     Users();
@@ -79,6 +80,7 @@ public:
     void logout();
     bool registerUser(Users* newUser);
     Users* getCurrentUser();
+    void setCurrentUser(Users* currUser);
     Users* getUserByEmail(string uemail);
     void displayAllUsers();
     friend class CompanyFile;

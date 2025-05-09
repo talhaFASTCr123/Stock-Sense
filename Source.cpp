@@ -67,7 +67,7 @@ Review::~Review() {
 
 Product::Product()
     : id(0), name(nullptr), category(nullptr), price(0.0), quantity(0), totalSales(0),
-    reviews(nullptr), reviewCount(0), reviewCapacity(0) {
+    reviews(new Review[10]), reviewCount(0), reviewCapacity(10) {
 }
 
 Product::~Product() {
@@ -78,10 +78,12 @@ Product::~Product() {
 
 void Product::resizeReviewArray() {
     int newCapacity = reviewCapacity == 0 ? 2 : reviewCapacity * 2;
+
     Review* newReviews = new Review[newCapacity];
     for (int i = 0; i < reviewCount; i++) {
         newReviews[i] = reviews[i];
     }
+
     delete[] reviews;
     reviews = newReviews;
     reviewCapacity = newCapacity;
@@ -94,13 +96,27 @@ char* Product::getCategory() const { return category; }
 double Product::getPrice() const { return price; }
 int Product::getQuantity() const { return quantity; }
 int Product::getTotalSales() const { return totalSales; }
-Review* Product::getAllReviews() const { return reviews; }
+Review* Product::getAllReviews() const {
+    if (reviews == nullptr) return nullptr;
+    Review* copied = new Review[reviewCount];
+    for (int i = 0; i < reviewCount; i++) {
+        copied[i] = reviews[i];
+    }
+    return copied;
+}
+
 int Product::getReviewCount() const { return reviewCount; }
 
 // Setters
 void Product::setId(int newId) { id = newId; }
-void Product::setName(char* newName) { name = newName; }
-void Product::setCategory(char* newCategory) { category = newCategory; }
+void Product::setName(char* newName) { 
+    delete[] name;
+    name = newName;
+}
+void Product::setCategory(char* newCategory) { 
+    delete category;
+    category = newCategory;
+}
 void Product::setPrice(double newPrice) { price = newPrice; }
 void Product::setQuantity(int newQuantity) { quantity = newQuantity; }
 void Product::setTotalSales(int newSales) { totalSales = newSales; }
@@ -160,6 +176,15 @@ void Inventory::freeProduct(Product* product) {
         delete[] product->getCategory();
         delete product;
     }
+}
+
+void Inventory::removeProductAt(int index) {
+    if (index < 0 || index >= productCount) return;
+    delete products[index];
+    for (int i = index; i < productCount - 1; ++i) {
+        products[i] = products[i + 1];
+    }
+    productCount--;
 }
 
 void Inventory::resizeInventory(bool increase) {
@@ -302,7 +327,7 @@ string encryptPassword(const string& password) {
 
 // ------------------ Users Class ------------------
 
-Users::Users() : username(" "), password(" "), role(" "), email(" ") {}
+Users::Users() : username(""), password(""), role(""), email("") {}
 
 Users::Users(string uname, string pass, string r, string e)
     : username(uname), password(pass), role(r), email(e) {
@@ -311,6 +336,7 @@ Users::Users(string uname, string pass, string r, string e)
 string Users::getUsername() { return username; }
 string Users::getPassword() { return password; }
 string Users::getRole() { return role; }
+void Users::setRole(string newRole) { role = newRole; }
 string Users::getemail() { return email; }
 
 void Users::setPassword(string newPass) {
@@ -330,7 +356,7 @@ Users::~Users() {
 
 // ------------------ Employee Class ------------------
 
-Employee::Employee() : Users(" ", " ", "Employee", " ") {}
+Employee::Employee() : Users("", "", "Employee", "") {}
 
 Employee::Employee(string uname, string pass, string umail) : Users(uname, pass, "Employee", umail) {}
 
@@ -364,7 +390,7 @@ Admin::~Admin() {
 
 // ------------------ Owner Class ------------------
 
-Owner::Owner() : Users(" ", " ", "Owner", " ") {}
+Owner::Owner() : Users("", "", "Owner", "") {}
 
 Owner::Owner(string uname, string pass, string email)
     : Users(uname, pass, "Owner", uname + "@gmail.com") {
@@ -488,18 +514,18 @@ Users* UserManager::getCurrentUser() {
     return currentUser;
 }
 
+void UserManager::setCurrentUser(Users* currUser)
+{
+    delete currentUser;
+    currentUser = currUser;
+}
+
 Users* UserManager::getUserByEmail(string uemail) {
-    for (int i = 0; i < userCount; i++) {
-        if (users[i] == nullptr) {
-            cout << "❌ Null user at index " << i << endl;
-            continue;
-        }
-        if (users[i]->getemail() == uemail) {
-            cout << "User found: " << uemail << endl;
+    for (int i = 0; i < userCount; i++) { // Note: userCount not userCapacity
+        if (users[i] && users[i]->getemail() == uemail) {
             return users[i];
         }
     }
-    cout << "No user found with email: " << uemail << endl;
     return nullptr;
 }
 
